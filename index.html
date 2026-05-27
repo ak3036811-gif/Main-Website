@@ -7,42 +7,72 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#fafaf8;--white:#fff;--ink:#0d0d0d;--ink2:#3a3a3a;--ink3:#888;--purple:#4f35d8;--purple-soft:#edeaff;--border:#e4e4e0;--surface:#f4f4f0;--green:#1a7a50;--green-soft:#e6f5ed}
+:root{
+  --bg:#fafaf8;--white:#fff;--ink:#0d0d0d;--ink2:#3a3a3a;--ink3:#888;
+  --purple:#4f35d8;--purple-soft:#edeaff;--border:#e4e4e0;--surface:#f4f4f0;
+  --green:#1a7a50;--green-soft:#e6f5ed;
+}
+html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
-nav{display:flex;justify-content:space-between;align-items:center;padding:1.2rem 4rem;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(250,250,248,0.95);backdrop-filter:blur(12px);z-index:100}
+
+/* ── SCROLL ANIMATIONS ── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.65s cubic-bezier(.22,1,.36,1),transform 0.65s cubic-bezier(.22,1,.36,1)}
+.reveal.visible{opacity:1;transform:none}
+.reveal-left{opacity:0;transform:translateX(-28px);transition:opacity 0.65s cubic-bezier(.22,1,.36,1),transform 0.65s cubic-bezier(.22,1,.36,1)}
+.reveal-left.visible{opacity:1;transform:none}
+.reveal-right{opacity:0;transform:translateX(28px);transition:opacity 0.65s cubic-bezier(.22,1,.36,1),transform 0.65s cubic-bezier(.22,1,.36,1)}
+.reveal-right.visible{opacity:1;transform:none}
+.delay-1{transition-delay:0.08s}.delay-2{transition-delay:0.16s}.delay-3{transition-delay:0.24s}
+.delay-4{transition-delay:0.32s}.delay-5{transition-delay:0.40s}
+
+/* ── NAV ── */
+nav{display:flex;justify-content:space-between;align-items:center;padding:1.2rem 4rem;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(250,250,248,0.92);backdrop-filter:blur(14px);z-index:100;transition:box-shadow 0.3s}
+nav.scrolled{box-shadow:0 2px 24px rgba(0,0,0,0.06)}
 .nav-logo{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--ink)}
 .nav-logo span{color:var(--purple)}
 .nav-links{display:flex;gap:2.5rem}
-.nav-links a{font-size:12px;font-weight:500;color:var(--ink3);letter-spacing:0.03em;text-transform:uppercase;transition:color 0.2s}
+.nav-links a{font-size:12px;font-weight:500;color:var(--ink3);letter-spacing:0.03em;text-transform:uppercase;transition:color 0.2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1.5px;background:var(--purple);transition:width 0.25s}
 .nav-links a:hover{color:var(--ink)}
+.nav-links a:hover::after{width:100%}
 .nav-cta{font-size:12px;font-weight:600;color:var(--purple);border:1.5px solid var(--purple);padding:0.4rem 1rem;border-radius:3px;transition:all 0.2s}
 .nav-cta:hover{background:var(--purple);color:#fff}
 @media(max-width:700px){nav{padding:1rem 1.5rem}.nav-links{display:none}}
+
+/* ── HERO ── */
 .hero{padding:6rem 4rem 5rem;border-bottom:1px solid var(--border);display:grid;grid-template-columns:1fr 340px;gap:6rem;align-items:center}
 @media(max-width:900px){.hero{grid-template-columns:1fr;gap:3rem;padding:4rem 1.5rem}}
-.hero-kicker{font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--purple);margin-bottom:1.5rem;display:flex;align-items:center;gap:10px}
+.hero-kicker{font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--purple);margin-bottom:1.5rem;display:flex;align-items:center;gap:10px;opacity:0;animation:fadeUp 0.7s 0.1s forwards}
 .hero-kicker::before{content:'';width:18px;height:1.5px;background:var(--purple)}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,4.5vw,4rem);font-weight:700;line-height:1.1;letter-spacing:-1px;color:var(--ink);margin-bottom:1.5rem}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,4.5vw,4rem);font-weight:700;line-height:1.1;letter-spacing:-1px;color:var(--ink);margin-bottom:1.5rem;opacity:0;animation:fadeUp 0.7s 0.2s forwards}
 .hero h1 em{font-style:italic;color:var(--purple)}
-.hero-sub{font-size:16px;color:var(--ink2);line-height:1.8;max-width:500px;margin-bottom:1.5rem;font-weight:300}
+.hero-sub{font-size:16px;color:var(--ink2);line-height:1.8;max-width:500px;margin-bottom:1.5rem;font-weight:300;opacity:0;animation:fadeUp 0.7s 0.3s forwards}
 .hero-sub strong{font-weight:600;color:var(--ink)}
-.hero-community{font-size:14px;color:var(--ink2);line-height:1.75;max-width:500px;margin-bottom:2.5rem;font-weight:300;padding:1.25rem 1.5rem;background:var(--surface);border-left:3px solid var(--purple);border-radius:0 4px 4px 0}
+.hero-community{font-size:14px;color:var(--ink2);line-height:1.75;max-width:500px;margin-bottom:2.5rem;font-weight:300;padding:1.25rem 1.5rem;background:var(--surface);border-left:3px solid var(--purple);border-radius:0 4px 4px 0;opacity:0;animation:fadeUp 0.7s 0.4s forwards}
 .hero-community strong{font-weight:600;color:var(--ink)}
-.hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
-.btn-fill{background:var(--ink);color:#fff;font-size:12px;font-weight:600;padding:0.75rem 1.75rem;border-radius:3px;transition:background 0.2s;letter-spacing:0.03em;display:inline-block}
-.btn-fill:hover{background:#222}
-.btn-outline{border:1.5px solid var(--border);color:var(--ink2);font-size:12px;font-weight:500;padding:0.75rem 1.75rem;border-radius:3px;transition:border-color 0.2s;display:inline-block}
-.btn-outline:hover{border-color:var(--ink)}
-.hero-stats{display:flex;flex-direction:column;gap:0}
-.hero-stat{padding:1.1rem 1.5rem;border:1px solid var(--border);border-bottom:none;background:var(--white)}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:fadeUp 0.7s 0.5s forwards}
+.btn-fill{background:var(--ink);color:#fff;font-size:12px;font-weight:600;padding:0.75rem 1.75rem;border-radius:3px;transition:background 0.2s,transform 0.15s;letter-spacing:0.03em;display:inline-block}
+.btn-fill:hover{background:#222;transform:translateY(-1px)}
+.btn-outline{border:1.5px solid var(--border);color:var(--ink2);font-size:12px;font-weight:500;padding:0.75rem 1.75rem;border-radius:3px;transition:border-color 0.2s,transform 0.15s;display:inline-block}
+.btn-outline:hover{border-color:var(--ink);transform:translateY(-1px)}
+.hero-stats{display:flex;flex-direction:column;gap:0;opacity:0;animation:fadeRight 0.8s 0.4s forwards}
+.hero-stat{padding:1.1rem 1.5rem;border:1px solid var(--border);border-bottom:none;background:var(--white);transition:background 0.2s,transform 0.2s,box-shadow 0.2s}
 .hero-stat:last-child{border-bottom:1px solid var(--border)}
+.hero-stat:hover{background:var(--purple-soft);transform:translateX(-3px);box-shadow:-3px 0 0 var(--purple)}
 .hero-stat-val{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:700;color:var(--ink);line-height:1}
 .hero-stat-label{font-size:11px;color:var(--ink3);margin-top:3px;font-weight:400}
-.philosophy{padding:3rem 4rem;background:var(--ink);border-bottom:1px solid #000}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes fadeRight{from{opacity:0;transform:translateX(22px)}to{opacity:1;transform:none}}
+
+/* ── PHILOSOPHY ── */
+.philosophy{padding:3rem 4rem;background:var(--ink);border-bottom:1px solid #000;overflow:hidden}
 @media(max-width:700px){.philosophy{padding:2.5rem 1.5rem}}
 .philosophy p{font-family:'Playfair Display',serif;font-size:clamp(1.2rem,2.5vw,1.6rem);font-style:italic;color:#fff;line-height:1.6;max-width:800px}
 .philosophy p span{color:rgba(255,255,255,0.4)}
+
+/* ── SECTION BASE ── */
 .section{padding:5rem 4rem;border-bottom:1px solid var(--border)}
 @media(max-width:700px){.section{padding:3.5rem 1.5rem}}
 .section-eyebrow{font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--purple);margin-bottom:0.6rem}
@@ -53,6 +83,8 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:1.2rem
 @media(max-width:900px){.g4{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:700px){.g2,.g3,.g4{grid-template-columns:1fr}}
 .gc{background:var(--bg);padding:2rem}
+
+/* ── ALGOBRIDGE ── */
 .algo-problem{padding:2.5rem;background:var(--surface);border-left:3px solid var(--purple);margin-bottom:3rem;border-radius:0 4px 4px 0}
 .algo-problem-label{font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--purple);margin-bottom:0.6rem}
 .algo-problem p{font-size:16px;color:var(--ink2);line-height:1.75;font-weight:300}
@@ -84,44 +116,97 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:1.2rem
 .photos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-bottom:3rem}
 @media(max-width:600px){.photos-grid{grid-template-columns:repeat(2,1fr)}}
 .photo-slot{aspect-ratio:4/3;overflow:hidden;background:var(--surface)}
-.photo-slot img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s}
-.photo-slot:hover img{transform:scale(1.05)}
+.photo-slot img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.5s cubic-bezier(.22,1,.36,1)}
+.photo-slot:hover img{transform:scale(1.06)}
 .photo-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;color:var(--ink3);font-size:11px;letter-spacing:0.05em;text-transform:uppercase}
 .outcome-list{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2.5rem}
 @media(max-width:600px){.outcome-list{grid-template-columns:1fr}}
 .outcome-item{display:flex;gap:10px;align-items:flex-start}
 .outcome-dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0;margin-top:7px}
 .outcome-text{font-size:13px;color:var(--ink2);line-height:1.6}
-.pullquote{margin-top:3rem;padding:2.5rem;background:var(--white);border:1px solid var(--border);border-left:3px solid var(--ink)}
+.pullquote{margin-top:3rem;padding:2.5rem;background:var(--white);border:1px solid var(--border);border-left:3px solid var(--ink);transition:border-left-color 0.3s}
+.pullquote:hover{border-left-color:var(--purple)}
 .pullquote p{font-family:'Playfair Display',serif;font-size:1.35rem;font-style:italic;color:var(--ink);line-height:1.55;margin-bottom:0.6rem}
 .pullquote cite{font-size:11px;color:var(--ink3);font-weight:500;letter-spacing:0.06em;text-transform:uppercase}
-.project-card{background:var(--bg);padding:2rem;position:relative;transition:background 0.2s}
-.project-card:hover{background:var(--white)}
-.project-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--purple);transform:scaleX(0);transform-origin:left;transition:transform 0.3s}
+
+/* ── PROJECTS ── */
+.project-card{background:var(--bg);padding:2rem;position:relative;transition:background 0.2s,transform 0.2s}
+.project-card:hover{background:var(--white);transform:translateY(-2px)}
+.project-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--purple);transform:scaleX(0);transform-origin:left;transition:transform 0.35s cubic-bezier(.22,1,.36,1)}
 .project-card:hover::after{transform:scaleX(1)}
 .project-type{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--purple);margin-bottom:0.6rem}
 .project-name{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--ink);margin-bottom:0.6rem;line-height:1.25}
 .project-desc{font-size:13px;color:var(--ink3);line-height:1.65;margin-bottom:1.25rem}
 .project-footer{display:flex;justify-content:space-between;align-items:center}
 .project-stack{font-size:11px;color:var(--ink3)}
-.project-link{font-size:11px;font-weight:600;color:var(--purple);letter-spacing:0.05em;text-transform:uppercase;text-decoration:underline;text-underline-offset:3px}
-.cert-card-big{background:var(--bg);padding:2rem;transition:background 0.2s}
-.cert-card-big:hover{background:var(--white)}
+.project-link{font-size:11px;font-weight:600;color:var(--purple);letter-spacing:0.05em;text-transform:uppercase;text-decoration:underline;text-underline-offset:3px;transition:color 0.2s}
+.project-link:hover{color:var(--ink)}
+
+/* ── RESEARCH SECTION ── */
+.research-section{padding:5rem 4rem;border-bottom:1px solid var(--border);background:linear-gradient(180deg,var(--bg) 0%,#f0eeff 100%)}
+@media(max-width:700px){.research-section{padding:3.5rem 1.5rem}}
+.research-cards{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);margin-bottom:2rem}
+@media(max-width:800px){.research-cards{grid-template-columns:1fr}}
+.research-card{background:#fff;padding:2.5rem;position:relative;overflow:hidden;transition:box-shadow 0.3s,transform 0.3s}
+.research-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(79,53,216,0.10)}
+.research-card-accent{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--purple),#a78bfa)}
+.research-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--purple);background:var(--purple-soft);padding:4px 10px;border-radius:3px;margin-bottom:1.25rem}
+.research-title{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--ink);line-height:1.3;margin-bottom:0.5rem}
+.research-meta{font-size:11px;color:var(--ink3);margin-bottom:1.25rem;letter-spacing:0.04em}
+.research-abstract{font-size:13.5px;color:var(--ink2);line-height:1.8;margin-bottom:1.75rem;font-weight:300}
+.research-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-bottom:1.75rem}
+.research-stat{background:var(--surface);padding:1rem;text-align:center}
+.research-stat-val{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--purple);line-height:1}
+.research-stat-label{font-size:10px;color:var(--ink3);margin-top:3px;line-height:1.3}
+.research-finding{display:flex;gap:10px;align-items:flex-start;margin-bottom:0.75rem}
+.research-finding-dot{width:5px;height:5px;border-radius:50%;background:var(--purple);flex-shrink:0;margin-top:7px}
+.research-finding-text{font-size:13px;color:var(--ink2);line-height:1.6}
+.research-findings-label{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:0.75rem}
+
+/* Score bar chart */
+.score-chart{margin:1.5rem 0;background:var(--surface);padding:1.25rem;border-radius:4px}
+.score-chart-title{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:1rem}
+.score-row{display:flex;align-items:center;gap:10px;margin-bottom:0.6rem}
+.score-label{font-size:11px;color:var(--ink2);width:65px;flex-shrink:0;font-weight:500}
+.score-bar-wrap{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden;position:relative}
+.score-bar{height:100%;border-radius:4px;transform:scaleX(0);transform-origin:left;transition:transform 1s cubic-bezier(.22,1,.36,1)}
+.score-bar.ai{background:var(--purple)}
+.score-bar.trad{background:var(--ink3)}
+.score-bar.hybrid{background:var(--green)}
+.score-val{font-size:11px;font-weight:700;color:var(--ink);width:38px;text-align:right;flex-shrink:0}
+.score-delta{font-size:10px;padding:2px 6px;border-radius:3px;font-weight:700;flex-shrink:0}
+.score-delta.good{background:var(--green-soft);color:var(--green)}
+.score-delta.best{background:var(--purple-soft);color:var(--purple)}
+
+/* Game study card extras */
+.game-metrics{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);margin:1.5rem 0}
+.game-metric{background:var(--surface);padding:1rem;text-align:center}
+.game-metric-val{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--ink);line-height:1}
+.game-metric-label{font-size:10px;color:var(--ink3);margin-top:3px}
+.game-metric-sub{font-size:10px;color:var(--green);font-weight:600;margin-top:2px}
+.tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:1.25rem}
+.tag{font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink3);background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:3px}
+
+/* ── WRITING ── */
+.cert-card-big{background:var(--bg);padding:2rem;transition:background 0.2s,transform 0.2s}
+.cert-card-big:hover{background:var(--white);transform:translateY(-2px)}
 .cert-issuer-big{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--purple);margin-bottom:0.5rem}
 .cert-title-big{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--ink);line-height:1.3;margin-bottom:0.4rem}
 .cert-meta-big{font-size:12px;color:var(--ink3);line-height:1.5}
 .cert-verify-big{display:inline-block;margin-top:0.6rem;font-size:11px;font-weight:600;color:var(--purple);letter-spacing:0.06em;text-transform:uppercase;text-decoration:underline;text-underline-offset:2px}
 .cert-award-big{display:inline-block;margin-top:0.6rem;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#8a6800;background:#fff8e0;border:1px solid #e8d060;padding:3px 10px;border-radius:3px}
-.blog-item{display:grid;grid-template-columns:80px 1fr 20px;gap:2rem;align-items:start;padding:1.5rem 0;border-bottom:1px solid var(--border)}
-.blog-item:first-child{border-top:1px solid var(--border)}
+.blog-item{display:grid;grid-template-columns:80px 1fr 20px;gap:2rem;align-items:start;padding:1.5rem 0;border-bottom:1px solid var(--border);transition:background 0.2s;margin:0 -1rem;padding-left:1rem;padding-right:1rem}
+.blog-item:first-of-type{border-top:1px solid var(--border)}
 @media(max-width:600px){.blog-item{grid-template-columns:1fr;gap:0.4rem}}
+.blog-item:hover{background:var(--white)}
 .blog-item:hover .blog-title{color:var(--purple)}
-.blog-item:hover .blog-arrow{color:var(--purple)}
+.blog-item:hover .blog-arrow{color:var(--purple);transform:translateX(3px)}
 .blog-date{font-size:11px;color:var(--ink3);padding-top:2px}
 .blog-title{font-size:14px;font-weight:600;color:var(--ink);line-height:1.4;margin-bottom:0.25rem;transition:color 0.2s}
 .blog-excerpt{font-size:12px;color:var(--ink3);line-height:1.55}
-.blog-arrow{font-size:14px;color:var(--ink3);transition:color 0.2s}
-.view-all-link{display:inline-flex;align-items:center;gap:6px;margin-top:1.5rem;font-size:11px;font-weight:700;color:var(--purple);letter-spacing:0.1em;text-transform:uppercase;text-decoration:underline;text-underline-offset:3px}
+.blog-arrow{font-size:14px;color:var(--ink3);transition:color 0.2s,transform 0.2s}
+.view-all-link{display:inline-flex;align-items:center;gap:6px;margin-top:1.5rem;font-size:11px;font-weight:700;color:var(--purple);letter-spacing:0.1em;text-transform:uppercase;text-decoration:underline;text-underline-offset:3px;transition:gap 0.2s}
+.view-all-link:hover{gap:10px}
 footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;border-top:1px solid var(--border)}
 @media(max-width:700px){footer{padding:2rem 1.5rem}}
 .footer-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:700}
@@ -134,11 +219,12 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
 </head>
 <body>
 
-<nav>
+<nav id="main-nav">
   <div class="nav-logo">Ayush<span>.</span></div>
   <div class="nav-links">
     <a href="#about">About</a>
     <a href="#algobridge">AlgoBridge</a>
+    <a href="#research">Research</a>
     <a href="#projects">Projects</a>
     <a href="#writing">Writing</a>
     <a href="#credentials">Credentials</a>
@@ -146,6 +232,7 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
   <a class="nav-cta" href="https://github.com/ak3036811-gif" target="_blank">GitHub ↗</a>
 </nav>
 
+<!-- ── HERO ── -->
 <section class="hero" id="about">
   <div>
     <div class="hero-kicker">AI Researcher · Educator · Builder</div>
@@ -158,33 +245,36 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
     </div>
     <div class="hero-actions">
       <a class="btn-fill" href="#algobridge">See My Impact Work</a>
-      <a class="btn-outline" href="#projects">View Projects</a>
+      <a class="btn-outline" href="#research">View Research</a>
     </div>
   </div>
   <div class="hero-stats">
     <div class="hero-stat"><div class="hero-stat-val">100+</div><div class="hero-stat-label">Students reached through AlgoBridge</div></div>
     <div class="hero-stat"><div class="hero-stat-val">5</div><div class="hero-stat-label">NGOs partnered with</div></div>
+    <div class="hero-stat"><div class="hero-stat-val">2</div><div class="hero-stat-label">Original research papers published</div></div>
     <div class="hero-stat"><div class="hero-stat-val">11+</div><div class="hero-stat-label">Years serving community — cultural education &amp; dialogue</div></div>
     <div class="hero-stat"><div class="hero-stat-val">7+</div><div class="hero-stat-label">Research blogs published</div></div>
     <div class="hero-stat"><div class="hero-stat-val">2nd</div><div class="hero-stat-label">Place — GSAP Global Pitching Finale</div></div>
   </div>
 </section>
 
+<!-- ── PHILOSOPHY ── -->
 <div class="philosophy">
-  <p>"I believe AI literacy should be as fundamental as reading. <span>The divide in who understands algorithms is as profound as the divide in who can see — and just as fixable.</span>"</p>
+  <p class="reveal">"I believe AI literacy should be as fundamental as reading. <span>The divide in who understands algorithms is as profound as the divide in who can see — and just as fixable.</span>"</p>
 </div>
 
+<!-- ── ALGOBRIDGE ── -->
 <section class="section" id="algobridge">
-  <div class="section-eyebrow">Community Impact</div>
-  <div class="section-heading">AlgoBridge</div>
+  <div class="section-eyebrow reveal">Community Impact</div>
+  <div class="section-heading reveal delay-1">AlgoBridge</div>
 
-  <div class="algo-problem">
+  <div class="algo-problem reveal">
     <div class="algo-problem-label">The Problem</div>
     <p>Millions of students graduate without ever encountering algorithms or AI — the engines powering the modern world. <strong>1 in 3 students lack basic digital literacy.</strong> In underserved schools, the number is far worse. Not because students lack ability — but because they lack access. No trained teachers. No infrastructure. No awareness of why it matters.</p>
   </div>
 
   <div class="algo-layout">
-    <div>
+    <div class="reveal-left">
       <div class="algo-name">Algo<em>Bridge</em></div>
       <div class="algo-tagline">Bridging the gap between algorithms and every student's future.</div>
       <p class="algo-desc">
@@ -197,7 +287,7 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
         <div class="outcome-item"><div class="outcome-dot"></div><div class="outcome-text">Students asked deep questions about AI that went beyond the curriculum</div></div>
       </div>
     </div>
-    <div class="impact-box">
+    <div class="impact-box reveal-right">
       <div class="impact-box-label">Scale &amp; Reach</div>
       <div class="impact-num"><div class="impact-num-val">100+</div><div class="impact-num-label">Students reached</div></div>
       <div class="impact-num"><div class="impact-num-val">5</div><div class="impact-num-label">NGOs partnered with</div></div>
@@ -207,7 +297,7 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
     </div>
   </div>
 
-  <div class="bafore-grid">
+  <div class="bafore-grid reveal">
     <div class="ba-card ba-before">
       <div class="ba-label">Before AlgoBridge</div>
       <div class="ba-stat"><span class="ba-pct">~20%</span></div>
@@ -221,9 +311,9 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
       <div style="margin-top:1rem;font-size:13px;color:var(--ink3);line-height:1.6">Students spontaneously connected Google Search, Netflix, and WhatsApp recommendations to what they had learned — without being prompted.</div>
     </div>
   </div>
-  <div style="font-size:11px;color:var(--ink3);font-style:italic;margin-bottom:3rem">* Based on pre/post comprehension checks conducted at the start and end of each workshop session.</div>
+  <div style="font-size:11px;color:var(--ink3);font-style:italic;margin-bottom:3rem" class="reveal">* Based on pre/post comprehension checks conducted at the start and end of each workshop session.</div>
 
-  <div class="photos-grid">
+  <div class="photos-grid reveal">
     <div class="photo-slot"><img src="photo1.jpeg" alt="AlgoBridge session" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>📸 photo1.jpeg</div>'"></div>
     <div class="photo-slot"><img src="photo2.jpeg" alt="AlgoBridge session" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>📸 photo2.jpeg</div>'"></div>
     <div class="photo-slot"><img src="photo3.jpeg" alt="AlgoBridge session" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>📸 photo3.jpeg</div>'"></div>
@@ -232,23 +322,135 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
     <div class="photo-slot"><img src="photo6.jpeg" alt="AlgoBridge session" onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'>📸 photo6.jpeg</div>'"></div>
   </div>
 
-  <div class="pullquote">
+  <div class="pullquote reveal">
     <p>"If a student walks away thinking 'I get it' — that is the whole point."</p>
     <cite>— Ayush Kumar, Founder · AlgoBridge · Grade 11, MNB Modern Senior Secondary School</cite>
   </div>
 </section>
 
+<!-- ── RESEARCH SECTION (NEW) ── -->
+<section class="research-section" id="research">
+  <div class="section-eyebrow reveal">Original Research · 2025</div>
+  <div class="section-heading reveal delay-1">Published Studies</div>
+
+  <div class="research-cards">
+
+    <!-- PAPER 1: AI vs Traditional Learning -->
+    <div class="research-card reveal-left">
+      <div class="research-card-accent"></div>
+      <div class="research-badge">📄 Academic Report · 2025</div>
+      <div class="research-title">AI vs. Traditional Learning: A Comparative Study on Understanding, Retention &amp; Exam Performance</div>
+      <div class="research-meta">2-Month Study · 39 Students · Top 5% JEE · Three Controlled Groups</div>
+      <p class="research-abstract">
+        Do AI tools genuinely improve academic outcomes, or do they create the illusion of learning while undermining deeper cognitive development? This study compared three groups of top-5% JEE students — AI-only, traditional-only, and hybrid — over two structured months of preparation, measuring score improvement, retention, and reasoning ability.
+      </p>
+
+      <div class="score-chart" data-animated="false">
+        <div class="score-chart-title">JEE Mains Practice Score — Improvement after 2 months</div>
+        <div class="score-row">
+          <div class="score-label">Hybrid</div>
+          <div class="score-bar-wrap"><div class="score-bar hybrid" style="--w:100%"></div></div>
+          <div class="score-val">+23 pts</div>
+          <div class="score-delta best">★ Best</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Traditional</div>
+          <div class="score-bar-wrap"><div class="score-bar trad" style="--w:47.8%"></div></div>
+          <div class="score-val">+11 pts</div>
+          <div class="score-delta good">2nd</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">AI Only</div>
+          <div class="score-bar-wrap"><div class="score-bar ai" style="--w:43.5%"></div></div>
+          <div class="score-val">+10 pts</div>
+          <div class="score-delta good">3rd</div>
+        </div>
+      </div>
+
+      <div class="research-stats">
+        <div class="research-stat"><div class="research-stat-val">39</div><div class="research-stat-label">Students across 3 groups</div></div>
+        <div class="research-stat"><div class="research-stat-val">+23</div><div class="research-stat-label">Hybrid group gain (pts)</div></div>
+        <div class="research-stat"><div class="research-stat-val">2×</div><div class="research-stat-label">Hybrid vs. single method</div></div>
+      </div>
+
+      <div class="research-findings-label">Key Findings</div>
+      <div class="research-finding"><div class="research-finding-dot"></div><div class="research-finding-text">The hybrid group started with the <em>lowest</em> baseline (195) yet finished highest (218) — a +23 pt gain, more than double either single-method group.</div></div>
+      <div class="research-finding"><div class="research-finding-dot"></div><div class="research-finding-text">AI accelerates concept acquisition and raises the performance ceiling; traditional methods build the depth and retention that exams actually demand.</div></div>
+      <div class="research-finding"><div class="research-finding-dot"></div><div class="research-finding-text">Passive AI users — those who read explanations without attempting problems independently — were the lowest performers despite feeling most confident.</div></div>
+      <div class="research-finding"><div class="research-finding-dot"></div><div class="research-finding-text">In JEE Mains, an 8-point gap between groups is not a statistical artefact — it is the difference between colleges and cutoffs.</div></div>
+
+      <div class="tag-row">
+        <span class="tag">JEE Preparation</span><span class="tag">Cognitive Science</span><span class="tag">Hybrid Learning</span><span class="tag">Active Recall</span><span class="tag">AI in Education</span>
+      </div>
+      <div style="margin-top:1.25rem">
+        <a href="https://osf.io/8f4c3" target="_blank" class="project-link" style="font-size:12px">View on OSF →</a>
+      </div>
+    </div>
+
+    <!-- PAPER 2: AI Adaptive Difficulty -->
+    <div class="research-card reveal-right">
+      <div class="research-card-accent"></div>
+      <div class="research-badge">🎮 Empirical Study · 2025</div>
+      <div class="research-title">AI-Adaptive Difficulty in Games: An Empirical Study on Player Engagement</div>
+      <div class="research-meta">Controlled Experiment · 10 Participants · 2D Platformer · Reinforcement-Inspired System</div>
+      <p class="research-abstract">
+        Static difficulty levels frustrate some players and bore others — neither outcome keeps people engaged. This study tests whether a lightweight, real-time AI system that adapts challenge to individual performance can meaningfully improve engagement and reduce failure, without the computational cost of deep reinforcement learning.
+      </p>
+
+      <div class="game-metrics">
+        <div class="game-metric">
+          <div class="game-metric-val">~21 min</div>
+          <div class="game-metric-label">Avg. playtime — Adaptive</div>
+          <div class="game-metric-sub">↑ vs ~12 min static</div>
+        </div>
+        <div class="game-metric">
+          <div class="game-metric-val">~3.5</div>
+          <div class="game-metric-label">Avg. retries — Adaptive</div>
+          <div class="game-metric-sub">↓ vs ~7 retries static</div>
+        </div>
+      </div>
+
+      <div class="research-stats">
+        <div class="research-stat"><div class="research-stat-val">75%</div><div class="research-stat-label">Longer sessions (adaptive)</div></div>
+        <div class="research-stat"><div class="research-stat-val">50%</div><div class="research-stat-label">Fewer retries per level</div></div>
+        <div class="research-stat"><div class="research-stat-val">0</div><div class="research-stat-label">Noticeable latency</div></div>
+      </div>
+
+      <div class="research-findings-label">Key Findings</div>
+      <div class="research-finding"><div class="research-finding-dot"></div><div class="research-finding-text">Adaptive difficulty produced significantly longer average sessions and consistently fewer retries — a strong proxy for the flow-state engagement described by Csikszentmihalyi.</div></div>
+      <div class="research-finding"><div class="research-finding-dot"></div><div class="research-finding-text">A lightweight rule-based approach — adjusting enemy speed, spawn rate, and obstacle density in real time — achieved comparable results to more complex ML-based systems.</div></div>
+      <div class="research-finding"><div class="research-finding-dot"></div><div class="research-finding-text">Findings extend directly to educational applications: when challenge is matched to skill, learners stay in the zone where growth actually happens.</div></div>
+      <div class="research-finding"><div class="research-finding-dot"></div><div class="research-finding-text">Like Left 4 Dead's AI Director, even simple adaptive systems can transform a frustrating experience into a motivating one — no neural network required.</div></div>
+
+      <div class="tag-row">
+        <span class="tag">Game AI</span><span class="tag">Adaptive Systems</span><span class="tag">Flow Theory</span><span class="tag">Player Engagement</span><span class="tag">Reinforcement Learning</span>
+      </div>
+      <div style="margin-top:1.25rem">
+        <a href="https://osf.io/54dws" target="_blank" class="project-link" style="font-size:12px">View on OSF →</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Connecting callout -->
+  <div class="pullquote reveal" style="margin-top:0">
+    <p>"Both studies point to the same truth: when AI matches challenge to the individual — whether in a game or a classroom — engagement rises, failure drops, and learning compounds."</p>
+    <cite>— Ayush Kumar · AI &amp; Education Research, 2025</cite>
+  </div>
+</section>
+
+<!-- ── PROJECTS ── -->
 <section class="section" id="projects">
-  <div class="section-eyebrow">Core Work</div>
-  <div class="section-heading">AI + Education Projects</div>
+  <div class="section-eyebrow reveal">Core Work</div>
+  <div class="section-heading reveal delay-1">AI + Education Projects</div>
   <div class="g2" style="margin-bottom:3rem">
-    <div class="project-card">
+    <div class="project-card reveal-left">
       <div class="project-type">Education Initiative · Ongoing</div>
       <div class="project-name">AlgoBridge — Workshop Program</div>
       <div class="project-desc">100+ students reached across 5 NGOs. Designed all curriculum, interactive activities, and delivery materials from scratch. Presented at GSAP Pitching Finale — placed 2nd internationally.</div>
       <div class="project-footer"><span class="project-stack">Curriculum Design · Teaching · Public Speaking</span><div style="display:flex;align-items:center;gap:12px"><span style="font-size:11px;color:var(--green);font-weight:600">● Active</span><a class="project-link" href="https://ak3036811-gif.github.io/algobridge-learn/" target="_blank">View Site →</a></div></div>
     </div>
-    <div class="project-card">
+    <div class="project-card reveal-right">
       <div class="project-type">Research Blog · 7+ Articles</div>
       <div class="project-name">AI &amp; Education Writing</div>
       <div class="project-desc">Research-backed essays on AI in learning — covering topics from student cognition to algorithmic bias. Written for a general audience, grounded in evidence.</div>
@@ -256,16 +458,16 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
     </div>
   </div>
 
-  <div class="section-eyebrow" style="margin-bottom:0.6rem">Technical Projects</div>
-  <div style="font-size:13px;color:var(--ink3);margin-bottom:1.5rem">Open-source work on GitHub — games, learning experiments, and CS coursework.</div>
+  <div class="section-eyebrow reveal" style="margin-bottom:0.6rem">Technical Projects</div>
+  <div style="font-size:13px;color:var(--ink3);margin-bottom:1.5rem" class="reveal delay-1">Open-source work on GitHub — games, learning experiments, and CS coursework.</div>
   <div class="g2">
-    <div class="project-card">
+    <div class="project-card reveal-left">
       <div class="project-type">Game Development · CS50AI</div>
       <div class="project-name">CS50.dev — Harvard Coursework</div>
       <div class="project-desc">12 AI projects and 9 Python problem sets from Harvard's CS50AI and CS50P — including search, optimization, machine learning, and neural networks.</div>
       <div class="project-footer"><span class="project-stack">Python · C · SQL · AI Algorithms</span><div style="display:flex;align-items:center;gap:12px"><span style="font-size:11px;color:var(--green);font-weight:600">● Active</span><a class="project-link" href="https://github.com/ak3036811-gif/CS50.dev" target="_blank">View on GitHub →</a></div></div>
     </div>
-    <div class="project-card">
+    <div class="project-card reveal-right">
       <div class="project-type">Game Development</div>
       <div class="project-name">Neon Arcade</div>
       <div class="project-desc">Two games built from scratch — a fast-paced space game with adaptive level progression, and a vocabulary recognition game designed to make learning through play effective.</div>
@@ -274,51 +476,53 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
   </div>
 </section>
 
+<!-- ── WRITING ── -->
 <section class="section" id="writing">
-  <div class="section-eyebrow">Research &amp; Essays</div>
-  <div class="section-heading">Writing</div>
-  <a class="blog-item" href="https://itsreadingtimee.blogspot.com/2026/04/i-studied-with-and-without-ai-for-2.html" target="_blank">
+  <div class="section-eyebrow reveal">Research &amp; Essays</div>
+  <div class="section-heading reveal delay-1">Writing</div>
+  <a class="blog-item reveal" href="https://itsreadingtimee.blogspot.com/2026/04/i-studied-with-and-without-ai-for-2.html" target="_blank">
     <div class="blog-date">Apr 2026</div>
     <div><div class="blog-title" style="font-size:15px;font-weight:700;color:var(--purple)">★ Flagship — I Studied With and Without AI for 2 Weeks. Here's What Happened.</div><div class="blog-excerpt">A personal controlled experiment measuring comprehension, retention, and depth of understanding with and without AI assistance. Data-backed conclusions.</div></div>
     <div class="blog-arrow">→</div>
   </a>
-  <a class="blog-item" href="https://itsreadingtimee.blogspot.com/2026/04/you-had-one-in-ten-to-power-of-twenty.html" target="_blank">
+  <a class="blog-item reveal" href="https://itsreadingtimee.blogspot.com/2026/04/you-had-one-in-ten-to-power-of-twenty.html" target="_blank">
     <div class="blog-date">Apr 2026</div>
     <div><div class="blog-title">You had a 1 in 10²·⁶⁸⁵·⁰⁰⁰ chance of being born. And you made it.</div><div class="blog-excerpt">A meditation on existence, probability, and the most unlikely miracle in the universe.</div></div>
     <div class="blog-arrow">→</div>
   </a>
-  <a class="blog-item" href="https://itsreadingtimee.blogspot.com/2026/03/is-ai-making-students-smarter-or-just.html" target="_blank">
+  <a class="blog-item reveal" href="https://itsreadingtimee.blogspot.com/2026/03/is-ai-making-students-smarter-or-just.html" target="_blank">
     <div class="blog-date">Mar 2026</div>
     <div><div class="blog-title">Is AI Making Students Smarter or Just Faster?</div><div class="blog-excerpt">Speed isn't understanding. Examining what the data says about cognitive depth vs task completion speed in AI-assisted learning.</div></div>
     <div class="blog-arrow">→</div>
   </a>
-  <a class="blog-item" href="https://itsreadingtimee.blogspot.com/2026/02/can-ai-replace-teachers-what-research.html" target="_blank">
+  <a class="blog-item reveal" href="https://itsreadingtimee.blogspot.com/2026/02/can-ai-replace-teachers-what-research.html" target="_blank">
     <div class="blog-date">Feb 2026</div>
     <div><div class="blog-title">Can AI Replace Teachers? What Research Actually Says</div><div class="blog-excerpt">A look at what peer-reviewed research — not headlines — says about the role of AI in formal education.</div></div>
     <div class="blog-arrow">→</div>
   </a>
-  <a class="blog-item" href="https://itsreadingtimee.blogspot.com/2026/01/how-i-use-ai-as-tutor-without-letting.html" target="_blank">
+  <a class="blog-item reveal" href="https://itsreadingtimee.blogspot.com/2026/01/how-i-use-ai-as-tutor-without-letting.html" target="_blank">
     <div class="blog-date">Jan 2026</div>
     <div><div class="blog-title">How I Use AI as a Tutor Without Letting It Think for Me</div><div class="blog-excerpt">The difference between outsourcing thinking to AI versus using it as a sparring partner for your own reasoning.</div></div>
     <div class="blog-arrow">→</div>
   </a>
-  <a class="blog-item" href="https://itsreadingtimee.blogspot.com/2026/01/using-ai-effectively-for-learning.html" target="_blank">
+  <a class="blog-item reveal" href="https://itsreadingtimee.blogspot.com/2026/01/using-ai-effectively-for-learning.html" target="_blank">
     <div class="blog-date">Jan 2026</div>
     <div><div class="blog-title">Using AI Effectively for Learning: An Oxford-Informed Perspective</div><div class="blog-excerpt">What cognitive science and Oxford research says about how AI should and shouldn't be used for learning.</div></div>
     <div class="blog-arrow">→</div>
   </a>
-  <a class="blog-item" href="https://itsreadingtimee.blogspot.com/2026/01/artificial-intelligence-meaning-and.html" target="_blank">
+  <a class="blog-item reveal" href="https://itsreadingtimee.blogspot.com/2026/01/artificial-intelligence-meaning-and.html" target="_blank">
     <div class="blog-date">Jan 2026</div>
     <div><div class="blog-title">Artificial Intelligence: Meaning and Types</div><div class="blog-excerpt">A clear breakdown of what AI actually is, the different types, and why the distinctions matter in practice.</div></div>
     <div class="blog-arrow">→</div>
   </a>
-  <a class="view-all-link" href="https://itsreadingtimee.blogspot.com" target="_blank">View all writing →</a>
+  <a class="view-all-link reveal" href="https://itsreadingtimee.blogspot.com" target="_blank">View all writing →</a>
 </section>
 
+<!-- ── CREDENTIALS ── -->
 <section class="section" id="credentials">
-  <div class="section-eyebrow">Education</div>
-  <div class="section-heading">Credentials</div>
-  <div class="g2" style="margin-bottom:1px">
+  <div class="section-eyebrow reveal">Education</div>
+  <div class="section-heading reveal delay-1">Credentials</div>
+  <div class="g2 reveal" style="margin-bottom:1px">
     <div class="cert-card-big">
       <div class="cert-issuer-big">Harvard University · Cambridge, MA</div>
       <div class="cert-title-big">CS50's Introduction to Artificial Intelligence with Python</div>
@@ -332,7 +536,7 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
       <a class="cert-verify-big" href="https://cs50.harvard.edu/certificates/965db1ed-410f-4d7a-9215-b9a084235abb" target="_blank">Verify credential →</a>
     </div>
   </div>
-  <div class="g2" style="margin-bottom:1px">
+  <div class="g2 reveal delay-1" style="margin-bottom:1px">
     <div class="cert-card-big">
       <div class="cert-issuer-big">Stanford Engineering · Center for Global &amp; Online Education</div>
       <div class="cert-title-big">Generative AI: Technology, Business &amp; Society</div>
@@ -344,13 +548,13 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
       <div class="cert-meta-big">Nov 2025–Jan 2026</div>
     </div>
   </div>
-  <div class="g4" style="margin-bottom:1px">
+  <div class="g4 reveal delay-2" style="margin-bottom:1px">
     <div class="cert-card-big"><div class="cert-issuer-big">Amazon Web Services</div><div class="cert-title-big">Generative AI for Executives</div><div class="cert-meta-big">Sep 12, 2025</div></div>
     <div class="cert-card-big"><div class="cert-issuer-big">Amazon Web Services</div><div class="cert-title-big">Intro to Generative AI — Art of the Possible</div><div class="cert-meta-big">Sep 10, 2025</div></div>
     <div class="cert-card-big"><div class="cert-issuer-big">Amazon Web Services</div><div class="cert-title-big">Foundations of Prompt Engineering</div><div class="cert-meta-big">Sep 10, 2025</div></div>
     <div class="cert-card-big"><div class="cert-issuer-big">IBM SkillsBuild</div><div class="cert-title-big">AI Literacy</div><div class="cert-meta-big">Nov 23, 2025</div></div>
   </div>
-  <div class="g2">
+  <div class="g2 reveal delay-3">
     <div class="cert-card-big">
       <div class="cert-issuer-big">Belong Education · Virtual Global Apprenticeship</div>
       <div class="cert-title-big">Data Science — DOT Glasses Project</div>
@@ -375,5 +579,44 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
   <div class="footer-copy">© 2026 Ayush Kumar</div>
 </footer>
 
+<script>
+// ── Scroll-triggered reveal ──
+const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+revealEls.forEach(el => io.observe(el));
+
+// ── Nav shadow on scroll ──
+const nav = document.getElementById('main-nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+}, { passive: true });
+
+// ── Animate score bars when chart scrolls into view ──
+const chartObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting && e.target.dataset.animated === 'false') {
+      e.target.dataset.animated = 'true';
+      const bars = e.target.querySelectorAll('.score-bar');
+      bars.forEach(bar => {
+        const w = bar.style.getPropertyValue('--w') || bar.getAttribute('style').match(/--w:([^;]+)/)?.[1] || '100%';
+        bar.style.setProperty('--target-w', w);
+        bar.style.width = w;
+        bar.style.transform = 'scaleX(0)';
+        requestAnimationFrame(() => {
+          bar.style.transform = 'scaleX(1)';
+        });
+      });
+    }
+  });
+}, { threshold: 0.4 });
+document.querySelectorAll('.score-chart').forEach(c => chartObserver.observe(c));
+</script>
 </body>
 </html>
