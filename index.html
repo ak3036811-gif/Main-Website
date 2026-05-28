@@ -714,7 +714,7 @@ async function tutorSend() {
   const typing = tutorAddMsg('ai', '<span style="opacity:.5">···</span>');
 
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    const res = await fetch('https://algobridge-tutor.ak3036811.workers.dev', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,system:TUTOR_SYSTEM,messages:tutorMessages})
