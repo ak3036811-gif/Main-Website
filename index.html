@@ -579,6 +579,71 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
   <div class="footer-copy">© 2026 Ayush Kumar</div>
 </footer>
 
+<!-- ── ALGOBRIDGE TUTOR WIDGET ── -->
+<style>
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.tutor-fab{position:fixed;bottom:28px;right:28px;z-index:999;width:56px;height:56px;border-radius:50%;background:var(--purple);border:none;cursor:pointer;box-shadow:0 4px 20px rgba(79,53,216,0.4);display:flex;align-items:center;justify-content:center;transition:transform 0.2s,box-shadow 0.2s;font-size:22px}
+.tutor-fab:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(79,53,216,0.5)}
+.tutor-fab-label{position:absolute;bottom:64px;right:0;background:var(--ink);color:#fff;font-size:11px;font-weight:600;padding:5px 10px;border-radius:4px;white-space:nowrap;opacity:0;transform:translateY(4px);transition:all 0.2s;pointer-events:none;letter-spacing:0.04em}
+.tutor-fab:hover .tutor-fab-label{opacity:1;transform:translateY(0)}
+.tutor-modal{position:fixed;bottom:96px;right:28px;z-index:998;width:360px;height:520px;background:var(--white);border:1px solid var(--border);border-radius:16px;box-shadow:0 16px 60px rgba(0,0,0,0.15);display:none;flex-direction:column;overflow:hidden;animation:fadeUp 0.25s ease}
+.tutor-header{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;background:var(--bg)}
+.tutor-av{width:34px;height:34px;border-radius:10px;background:var(--purple);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Playfair Display',serif;font-size:13px;font-weight:700}
+.tutor-hinfo{flex:1}
+.tutor-hname{font-size:13px;font-weight:600;color:var(--ink)}
+.tutor-hsub{font-size:11px;color:var(--ink3);display:flex;align-items:center;gap:5px}
+.tutor-dot{width:6px;height:6px;border-radius:50%;background:#22c55e}
+.tutor-close{background:none;border:none;cursor:pointer;font-size:18px;color:var(--ink3);padding:2px 6px;border-radius:4px;transition:background 0.15s}
+.tutor-close:hover{background:var(--surface);color:var(--ink)}
+.tutor-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.tutor-starters{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.tutor-starter{padding:5px 10px;border:1px solid var(--border);border-radius:20px;font-size:11px;color:var(--ink3);background:transparent;cursor:pointer;transition:all 0.15s;font-family:'Inter',sans-serif}
+.tutor-starter:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-soft)}
+.tutor-input-row{padding:12px;border-top:1px solid var(--border);display:flex;gap:8px;align-items:flex-end;background:var(--bg)}
+.tutor-input-row textarea{flex:1;background:var(--white);border:1px solid var(--border);border-radius:10px;padding:8px 12px;font-size:13px;font-family:'Inter',sans-serif;color:var(--ink);resize:none;outline:none;min-height:36px;max-height:90px;line-height:1.5;transition:border-color 0.15s}
+.tutor-input-row textarea:focus{border-color:var(--purple)}
+.tutor-input-row textarea::placeholder{color:var(--ink3)}
+.tutor-send{width:34px;height:34px;border-radius:8px;background:var(--purple);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background 0.15s}
+.tutor-send:hover{background:#3d28b0}
+.tutor-send:disabled{opacity:0.4;cursor:not-allowed}
+.tutor-send svg{width:14px;height:14px;fill:#fff}
+@media(max-width:500px){.tutor-modal{width:calc(100vw - 32px);right:16px;bottom:88px}}
+</style>
+
+<button class="tutor-fab" onclick="toggleTutor()" title="AlgoBridge Tutor">
+  🧠
+  <span class="tutor-fab-label">Ask AlgoBridge Tutor</span>
+</button>
+
+<div class="tutor-modal" id="tutor-modal">
+  <div class="tutor-header">
+    <div class="tutor-av">AB</div>
+    <div class="tutor-hinfo">
+      <div class="tutor-hname">AlgoBridge Tutor</div>
+      <div class="tutor-hsub"><span class="tutor-dot"></span> AI Literacy · Free for Everyone</div>
+    </div>
+    <button class="tutor-close" onclick="toggleTutor()">×</button>
+  </div>
+  <div class="tutor-messages" id="tutor-messages">
+    <div style="align-self:flex-start;max-width:90%">
+      <div style="padding:10px 14px;border-radius:3px 12px 12px 12px;background:var(--white);border:1px solid var(--border);font-size:13px;line-height:1.65;color:var(--ink)">
+        Hi! I'm the AlgoBridge Tutor 👋 I teach AI literacy — ask me anything about algorithms, AI bias, search systems, or how AI makes decisions.
+      </div>
+      <div class="tutor-starters">
+        <button class="tutor-starter" onclick="document.getElementById('tutor-input').value=this.innerText;tutorSend()">What is an algorithm?</button>
+        <button class="tutor-starter" onclick="document.getElementById('tutor-input').value=this.innerText;tutorSend()">How is AI biased?</button>
+        <button class="tutor-starter" onclick="document.getElementById('tutor-input').value=this.innerText;tutorSend()">How does Google rank results?</button>
+      </div>
+    </div>
+  </div>
+  <div class="tutor-input-row">
+    <textarea id="tutor-input" placeholder="Ask anything about AI..." rows="1" onkeydown="tutorKey(event)" oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,90)+'px'"></textarea>
+    <button class="tutor-send" id="tutor-send" onclick="tutorSend()">
+      <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+    </button>
+  </div>
+</div>
+
 <script>
 // ── Scroll-triggered reveal ──
 const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
@@ -597,6 +662,74 @@ const nav = document.getElementById('main-nav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 20);
 }, { passive: true });
+
+// ── AlgoBridge Tutor Chat ──
+const TUTOR_SYSTEM = `You are AlgoBridge Tutor — a friendly AI literacy educator built by AlgoBridge, a nonprofit founded by Ayush Kumar to teach algorithms, AI bias, search systems, and AI decision-making to underserved students. Be warm, clear, and use simple real-world examples. Keep responses concise. Use **bold** for key terms.`;
+
+let tutorMessages = [];
+let tutorLoading = false;
+
+function toggleTutor() {
+  const modal = document.getElementById('tutor-modal');
+  const isOpen = modal.style.display === 'flex';
+  modal.style.display = isOpen ? 'none' : 'flex';
+  if (!isOpen) document.getElementById('tutor-input').focus();
+}
+
+function tutorKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); tutorSend(); }
+}
+
+function tutorFormat(text) {
+  return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+}
+
+function tutorAddMsg(role, text) {
+  const box = document.getElementById('tutor-messages');
+  const d = document.createElement('div');
+  d.style.cssText = `display:flex;gap:8px;${role==='user'?'flex-direction:row-reverse;align-self:flex-end':'align-self:flex-start'};max-width:85%;animation:fadeUp 0.25s ease`;
+  const av = document.createElement('div');
+  av.style.cssText = `width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px;${role==='user'?'background:var(--surface);border:1px solid var(--border);color:var(--ink3)':'background:var(--purple);color:#fff;font-family:\'Playfair Display\',serif'}`;
+  av.textContent = role==='user'?'You':'AB';
+  const bub = document.createElement('div');
+  bub.style.cssText = `padding:10px 14px;border-radius:12px;font-size:13px;line-height:1.65;${role==='user'?'background:var(--ink);color:#fff;border-radius:12px 3px 12px 12px':'background:var(--white);border:1px solid var(--border);border-radius:3px 12px 12px 12px;color:var(--ink)'}`;
+  bub.innerHTML = tutorFormat(text);
+  d.appendChild(av); d.appendChild(bub);
+  box.appendChild(d);
+  box.scrollTop = box.scrollHeight;
+  return d;
+}
+
+async function tutorSend() {
+  const inp = document.getElementById('tutor-input');
+  const btn = document.getElementById('tutor-send');
+  const text = inp.value.trim();
+  if (!text || tutorLoading) return;
+  tutorLoading = true; btn.disabled = true;
+  inp.value = '';
+  tutorAddMsg('user', text);
+  tutorMessages.push({role:'user', content:text});
+
+  // typing
+  const typing = tutorAddMsg('ai', '<span style="opacity:.5">···</span>');
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,system:TUTOR_SYSTEM,messages:tutorMessages})
+    });
+    const data = await res.json();
+    typing.remove();
+    const reply = data.content?.map(b=>b.text||'').join('') || "Sorry, something went wrong. Try again!";
+    tutorMessages.push({role:'assistant', content:reply});
+    tutorAddMsg('ai', reply);
+  } catch {
+    typing.remove();
+    tutorAddMsg('ai', "Connection issue — please try again.");
+  }
+  tutorLoading = false; btn.disabled = false; inp.focus();
+}
 
 // ── Animate score bars when chart scrolls into view ──
 const chartObserver = new IntersectionObserver((entries) => {
