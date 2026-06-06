@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ayush Kumar — AI Researcher & Educator</title>
+<title>Ayush Kumar — AI Researcher, Educator & Creative Technologist</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -17,12 +17,12 @@ body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-s
 a{color:inherit;text-decoration:none}
 
 /* ── SCROLL ANIMATIONS ── */
-.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.65s cubic-bezier(.22,1,.36,1),transform 0.65s cubic-bezier(.22,1,.36,1)}
-.reveal.visible{opacity:1;transform:none}
-.reveal-left{opacity:0;transform:translateX(-28px);transition:opacity 0.65s cubic-bezier(.22,1,.36,1),transform 0.65s cubic-bezier(.22,1,.36,1)}
-.reveal-left.visible{opacity:1;transform:none}
-.reveal-right{opacity:0;transform:translateX(28px);transition:opacity 0.65s cubic-bezier(.22,1,.36,1),transform 0.65s cubic-bezier(.22,1,.36,1)}
-.reveal-right.visible{opacity:1;transform:none}
+.reveal{opacity:1;transform:none}
+
+.reveal-left{opacity:1;transform:none}
+
+.reveal-right{opacity:1;transform:none}
+
 .delay-1{transition-delay:0.08s}.delay-2{transition-delay:0.16s}.delay-3{transition-delay:0.24s}
 .delay-4{transition-delay:0.32s}.delay-5{transition-delay:0.40s}
 
@@ -43,20 +43,20 @@ nav.scrolled{box-shadow:0 2px 24px rgba(0,0,0,0.06)}
 /* ── HERO ── */
 .hero{padding:6rem 4rem 5rem;border-bottom:1px solid var(--border);display:grid;grid-template-columns:1fr 340px;gap:6rem;align-items:center}
 @media(max-width:900px){.hero{grid-template-columns:1fr;gap:3rem;padding:4rem 1.5rem}}
-.hero-kicker{font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--purple);margin-bottom:1.5rem;display:flex;align-items:center;gap:10px;opacity:0;animation:fadeUp 0.7s 0.1s forwards}
+.hero-kicker{font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--purple);margin-bottom:1.5rem;display:flex;align-items:center;gap:10px;opacity:1}
 .hero-kicker::before{content:'';width:18px;height:1.5px;background:var(--purple)}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,4.5vw,4rem);font-weight:700;line-height:1.1;letter-spacing:-1px;color:var(--ink);margin-bottom:1.5rem;opacity:0;animation:fadeUp 0.7s 0.2s forwards}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,4.5vw,4rem);font-weight:700;line-height:1.1;letter-spacing:-1px;color:var(--ink);margin-bottom:1.5rem;opacity:1}
 .hero h1 em{font-style:italic;color:var(--purple)}
-.hero-sub{font-size:16px;color:var(--ink2);line-height:1.8;max-width:500px;margin-bottom:1.5rem;font-weight:300;opacity:0;animation:fadeUp 0.7s 0.3s forwards}
+.hero-sub{font-size:16px;color:var(--ink2);line-height:1.8;max-width:500px;margin-bottom:1.5rem;font-weight:300;opacity:1}
 .hero-sub strong{font-weight:600;color:var(--ink)}
-.hero-community{font-size:14px;color:var(--ink2);line-height:1.75;max-width:500px;margin-bottom:2.5rem;font-weight:300;padding:1.25rem 1.5rem;background:var(--surface);border-left:3px solid var(--purple);border-radius:0 4px 4px 0;opacity:0;animation:fadeUp 0.7s 0.4s forwards}
+.hero-community{font-size:14px;color:var(--ink2);line-height:1.75;max-width:500px;margin-bottom:2.5rem;font-weight:300;padding:1.25rem 1.5rem;background:var(--surface);border-left:3px solid var(--purple);border-radius:0 4px 4px 0;opacity:1}
 .hero-community strong{font-weight:600;color:var(--ink)}
-.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:fadeUp 0.7s 0.5s forwards}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;opacity:1}
 .btn-fill{background:var(--ink);color:#fff;font-size:12px;font-weight:600;padding:0.75rem 1.75rem;border-radius:3px;transition:background 0.2s,transform 0.15s;letter-spacing:0.03em;display:inline-block}
 .btn-fill:hover{background:#222;transform:translateY(-1px)}
 .btn-outline{border:1.5px solid var(--border);color:var(--ink2);font-size:12px;font-weight:500;padding:0.75rem 1.75rem;border-radius:3px;transition:border-color 0.2s,transform 0.15s;display:inline-block}
 .btn-outline:hover{border-color:var(--ink);transform:translateY(-1px)}
-.hero-stats{display:flex;flex-direction:column;gap:0;opacity:0;animation:fadeRight 0.8s 0.4s forwards}
+.hero-stats{display:flex;flex-direction:column;gap:0;opacity:1}
 .hero-stat{padding:1.1rem 1.5rem;border:1px solid var(--border);border-bottom:none;background:var(--white);transition:background 0.2s,transform 0.2s,box-shadow 0.2s}
 .hero-stat:last-child{border-bottom:1px solid var(--border)}
 .hero-stat:hover{background:var(--purple-soft);transform:translateX(-3px);box-shadow:-3px 0 0 var(--purple)}
@@ -215,6 +215,48 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
 .footer-links a{font-size:11px;font-weight:500;color:var(--ink3);letter-spacing:0.05em;text-transform:uppercase;transition:color 0.2s}
 .footer-links a:hover{color:var(--ink)}
 .footer-copy{font-size:11px;color:var(--ink3)}
+
+/* ── THE LEARNING GAP FEATURE ── */
+.lg-feature{padding:5rem 4rem;border-bottom:1px solid var(--border);background:var(--ink);position:relative;overflow:hidden}
+@media(max-width:700px){.lg-feature{padding:3.5rem 1.5rem}}
+.lg-feature::before{content:"";position:absolute;top:-120px;right:-120px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(79,53,216,0.25) 0%,transparent 70%);pointer-events:none}
+.lg-inner{display:grid;grid-template-columns:1fr 420px;gap:5rem;align-items:center;position:relative;z-index:1}
+@media(max-width:900px){.lg-inner{grid-template-columns:1fr;gap:2.5rem}}
+.lg-eyebrow{font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.8rem}
+.lg-title{font-family:"Playfair Display",serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:700;color:#fff;line-height:1.1;letter-spacing:-0.5px;margin-bottom:1.25rem}
+.lg-title em{color:#a78bfa;font-style:italic}
+.lg-desc{font-size:15px;color:rgba(255,255,255,0.65);line-height:1.85;font-weight:300;margin-bottom:2rem;max-width:480px}
+.lg-desc strong{color:#fff;font-weight:500}
+.lg-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:2rem}
+.lg-tag{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.15);padding:4px 10px;border-radius:3px}
+.lg-cta{display:inline-flex;align-items:center;gap:10px;background:#fff;color:var(--ink);font-size:12px;font-weight:700;padding:0.85rem 1.75rem;border-radius:3px;letter-spacing:0.04em;transition:background 0.2s,transform 0.15s}
+.lg-cta:hover{background:#f0eeff;transform:translateY(-2px)}
+.lg-preview{position:relative}
+.lg-browser{background:#1a1a2e;border-radius:10px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,0.5),0 0 0 1px rgba(255,255,255,0.08);transform:perspective(800px) rotateY(-6deg) rotateX(3deg);transition:transform 0.4s}
+.lg-browser:hover{transform:perspective(800px) rotateY(0deg) rotateX(0deg)}
+.lg-browser-bar{background:#111;padding:10px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.lg-dot{width:10px;height:10px;border-radius:50%}
+.lg-url{flex:1;background:rgba(255,255,255,0.06);border-radius:4px;padding:4px 10px;font-size:10px;color:rgba(255,255,255,0.3);font-family:"Inter",sans-serif;margin:0 8px}
+.lg-screen{aspect-ratio:16/10;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.lg-canvas{position:absolute;inset:0;opacity:0.7}
+.lg-screen-text{position:relative;z-index:1;text-align:center;padding:2rem}
+.lg-screen-title{font-family:"Playfair Display",serif;font-size:1.4rem;font-weight:700;color:#fff;margin-bottom:0.5rem;line-height:1.2}
+.lg-screen-sub{font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:0.08em;text-transform:uppercase}
+.lg-scroll-hint{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:0.08em}
+
+/* ── CREATIVE WORK TEASER ── */
+.creative-teaser{padding:5rem 4rem;border-bottom:1px solid var(--border);background:var(--surface)}
+@media(max-width:700px){.creative-teaser{padding:3.5rem 1.5rem}}
+.creative-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);margin-top:2.5rem}
+@media(max-width:900px){.creative-grid{grid-template-columns:repeat(2,1fr)}}
+.creative-card{background:var(--bg);aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.6rem;transition:background 0.2s;position:relative;overflow:hidden}
+.creative-card::after{content:"";position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--purple);transform:scaleX(0);transform-origin:left;transition:transform 0.35s}
+.creative-card:hover{background:var(--white)}
+.creative-card:hover::after{transform:scaleX(1)}
+.creative-card-icon{font-size:1.75rem;line-height:1}
+.creative-card-label{font-size:11px;font-weight:600;color:var(--ink3);letter-spacing:0.06em;text-transform:uppercase}
+.creative-card-sub{font-size:10px;color:#aaa;font-style:italic}
+.creative-soon{display:inline-flex;align-items:center;gap:6px;margin-top:2rem;font-size:11px;font-weight:600;color:var(--purple);letter-spacing:0.08em;text-transform:uppercase;border:1.5px solid var(--purple);padding:0.5rem 1.2rem;border-radius:3px}
 </style>
 </head>
 <body>
@@ -223,9 +265,11 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
   <div class="nav-logo">Ayush<span>.</span></div>
   <div class="nav-links">
     <a href="#about">About</a>
+    <a href="#learning-gap" style="color:var(--purple);font-weight:600">The Learning Gap ↗</a>
     <a href="#algobridge">AlgoBridge</a>
     <a href="#research">Research</a>
     <a href="#projects">Projects</a>
+    <a href="#creative">Creative Work</a>
     <a href="#writing">Writing</a>
     <a href="#credentials">Credentials</a>
   </div>
@@ -235,8 +279,8 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
 <!-- ── HERO ── -->
 <section class="hero" id="about">
   <div>
-    <div class="hero-kicker">AI Researcher · Educator · Builder</div>
-    <h1>Building AI tools and teaching <em>100+ students</em> how algorithms shape their world.</h1>
+    <div class="hero-kicker">AI Researcher · Creative Technologist · Educator</div>
+    <h1>Building AI tools, publishing research, and making things where <em>code and art are inseparable.</em></h1>
     <p class="hero-sub">
       I'm <strong>Ayush Kumar</strong>, a Grade 11 student from Ghaziabad, India. I design adaptive AI systems, founded <strong>AlgoBridge</strong> — a digital literacy initiative that has reached 100+ underserved students across 5 NGOs — and write research-backed essays on AI and education.
     </p>
@@ -252,8 +296,8 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
     <div class="hero-stat"><div class="hero-stat-val">100+</div><div class="hero-stat-label">Students reached through AlgoBridge</div></div>
     <div class="hero-stat"><div class="hero-stat-val">5</div><div class="hero-stat-label">NGOs partnered with</div></div>
     <div class="hero-stat"><div class="hero-stat-val">2</div><div class="hero-stat-label">Original research papers published</div></div>
-    <div class="hero-stat"><div class="hero-stat-val">11+</div><div class="hero-stat-label">Years serving community — cultural education &amp; dialogue</div></div>
-    <div class="hero-stat"><div class="hero-stat-val">7+</div><div class="hero-stat-label">Research blogs published</div></div>
+    <div class="hero-stat"><div class="hero-stat-val">11+</div><div class="hero-stat-label">Years in community &amp; cultural programs</div></div>
+    <div class="hero-stat"><div class="hero-stat-val">40k+</div><div class="hero-stat-label">Blog readers across 10+ countries</div></div>
     <div class="hero-stat"><div class="hero-stat-val">2nd</div><div class="hero-stat-label">Place — GSAP Global Pitching Finale</div></div>
   </div>
 </section>
@@ -262,6 +306,57 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
 <div class="philosophy">
   <p class="reveal">"I believe AI literacy should be as fundamental as reading. <span>The divide in who understands algorithms is as profound as the divide in who can see — and just as fixable.</span>"</p>
 </div>
+
+<!-- ── THE LEARNING GAP — FEATURED ── -->
+<section class="lg-feature" id="learning-gap">
+  <div class="lg-inner">
+    <div>
+      <div class="lg-eyebrow">Featured Work · Computing &amp; the Arts</div>
+      <div class="lg-title">The Learning Gap — <em>an interactive visual essay</em></div>
+      <p class="lg-desc"><strong>Not a website with visuals attached.</strong> An essay where generative art responds to scroll — argument and medium co-designed from scratch. The thesis: AI literacy compounds inequality the same way vision access does. Every animation is an argument. Every visual choice is evidence.</p>
+      <div class="lg-tags">
+        <span class="lg-tag">Generative Art</span>
+        <span class="lg-tag">Interactive Design</span>
+        <span class="lg-tag">Self-Coded</span>
+        <span class="lg-tag">Original Research</span>
+        <span class="lg-tag">Visual Essay</span>
+      </div>
+      <a class="lg-cta" href="https://ak3036811-gif.github.io/The-learning-gap/" target="_blank">Experience it live →</a>
+    </div>
+    <div class="lg-preview">
+      <div class="lg-browser">
+        <div class="lg-browser-bar">
+          <div class="lg-dot" style="background:#ff5f57"></div>
+          <div class="lg-dot" style="background:#febc2e"></div>
+          <div class="lg-dot" style="background:#28c840"></div>
+          <div class="lg-url">ak3036811-gif.github.io/The-learning-gap/</div>
+        </div>
+        <div class="lg-screen">
+          <canvas class="lg-canvas" id="lg-canvas"></canvas>
+          <div class="lg-screen-text">
+            <div class="lg-screen-title">The Learning Gap</div>
+            <div class="lg-screen-sub">Generative art + argument · Self-coded</div>
+          </div>
+          <div class="lg-scroll-hint">↓ scroll to reveal</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CREATIVE WORK TEASER ── -->
+<section class="creative-teaser" id="creative">
+  <div class="section-eyebrow">Art · Music · Visual Work</div>
+  <div class="section-heading">Creative Work</div>
+  <p style="font-size:15px;color:var(--ink2);line-height:1.8;max-width:600px;font-weight:300">Five years of drawing — anime, scenery, visual composition. Three years of self-taught flute. The same discipline that breaks a difficult passage apart until it resolves is identical to how I debug or redesign a system. Visual thinking shapes every interface I build.</p>
+  <div class="creative-grid">
+    <div class="creative-card"><div class="creative-card-icon">✏️</div><div class="creative-card-label">Drawings</div><div class="creative-card-sub">Anime · Scenery · Portraits</div></div>
+    <div class="creative-card"><div class="creative-card-icon">🎵</div><div class="creative-card-label">Flute</div><div class="creative-card-sub">Self-taught · 3 years</div></div>
+    <div class="creative-card"><div class="creative-card-icon">⚙️</div><div class="creative-card-label">Generative Art</div><div class="creative-card-sub">Code as creative medium</div></div>
+    <div class="creative-card"><div class="creative-card-icon">🎨</div><div class="creative-card-label">Interactive Design</div><div class="creative-card-sub">The Learning Gap &amp; beyond</div></div>
+  </div>
+  <div class="creative-soon">⏳ Full art page &amp; recordings — coming soon</div>
+</section>
 
 <!-- ── ALGOBRIDGE ── -->
 <section class="section" id="algobridge">
@@ -574,6 +669,7 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
   <div class="footer-name">Ayush<span>.</span></div>
   <div class="footer-links">
     <a href="https://github.com/ak3036811-gif" target="_blank">GitHub</a>
+    <a href="https://ak3036811-gif.github.io/The-learning-gap/" target="_blank">The Learning Gap</a>
     <a href="https://itsreadingtimee.blogspot.com" target="_blank">Blog</a>
     <a href="mailto:Ayushk3036811@gmail.com">Email</a>
   </div>
@@ -731,6 +827,34 @@ async function tutorSend() {
   }
   tutorLoading = false; btn.disabled = false; inp.focus();
 }
+
+
+// Learning Gap canvas animation
+(function(){
+  var canvas=document.getElementById("lg-canvas");
+  if(!canvas)return;
+  var ctx=canvas.getContext("2d");
+  var w,h,particles=[],frame=0;
+  function resize(){w=canvas.width=canvas.offsetWidth;h=canvas.height=canvas.offsetHeight;}
+  function Particle(){
+    this.reset=function(){this.x=Math.random()*w;this.y=Math.random()*h;this.vx=(Math.random()-0.5)*0.4;this.vy=(Math.random()-0.5)*0.4;this.size=Math.random()*2+0.5;this.alpha=Math.random()*0.6+0.1;this.hue=240+Math.random()*60;};
+    this.reset();
+    this.update=function(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>w||this.y<0||this.y>h)this.reset();};
+    this.draw=function(){ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fillStyle="hsla("+this.hue+",80%,70%,"+this.alpha+")";ctx.fill();};
+  }
+  resize();
+  for(var i=0;i<60;i++)particles.push(new Particle());
+  function loop(){
+    ctx.clearRect(0,0,w,h);frame++;
+    ctx.beginPath();ctx.moveTo(0,h/2);
+    for(var x=0;x<=w;x+=4){var y=h/2+Math.sin(x/w*Math.PI*4+frame*0.012)*h*0.1+Math.sin(x/w*Math.PI*7+frame*0.018)*h*0.05;ctx.lineTo(x,y);}
+    ctx.strokeStyle="hsla(260,70%,65%,0.3)";ctx.lineWidth=1.2;ctx.stroke();
+    particles.forEach(function(p){p.update();p.draw();});
+    requestAnimationFrame(loop);
+  }
+  window.addEventListener("resize",resize);
+  loop();
+})();
 
 // ── Animate score bars when chart scrolls into view ──
 const chartObserver = new IntersectionObserver((entries) => {
