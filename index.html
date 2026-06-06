@@ -17,14 +17,23 @@ body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-s
 a{color:inherit;text-decoration:none}
 
 /* ── SCROLL ANIMATIONS ── */
-.reveal{opacity:1;transform:none}
+.reveal{opacity:1;transform:none;transition:opacity 0.65s cubic-bezier(.22,1,.36,1),transform 0.65s cubic-bezier(.22,1,.36,1)}
+.reveal.will-animate{opacity:0;transform:translateY(28px)}
+.reveal.will-animate.visible{opacity:1;transform:none}
 
-.reveal-left{opacity:1;transform:none}
+.reveal-left{opacity:1;transform:none;transition:opacity 0.65s cubic-bezier(.22,1,.36,1),transform 0.65s cubic-bezier(.22,1,.36,1)}
+.reveal-left.will-animate{opacity:0;transform:translateX(-28px)}
+.reveal-left.will-animate.visible{opacity:1;transform:none}
 
-.reveal-right{opacity:1;transform:none}
+.reveal-right{opacity:1;transform:none;transition:opacity 0.65s cubic-bezier(.22,1,.36,1),transform 0.65s cubic-bezier(.22,1,.36,1)}
+.reveal-right.will-animate{opacity:0;transform:translateX(28px)}
+.reveal-right.will-animate.visible{opacity:1;transform:none}
 
 .delay-1{transition-delay:0.08s}.delay-2{transition-delay:0.16s}.delay-3{transition-delay:0.24s}
 .delay-4{transition-delay:0.32s}.delay-5{transition-delay:0.40s}
+.reveal.visible.delay-1,.reveal-left.visible.delay-1,.reveal-right.visible.delay-1{transition-delay:0.08s}
+.reveal.visible.delay-2,.reveal-left.visible.delay-2,.reveal-right.visible.delay-2{transition-delay:0.16s}
+.reveal.visible.delay-3,.reveal-left.visible.delay-3,.reveal-right.visible.delay-3{transition-delay:0.24s}
 
 /* ── NAV ── */
 nav{display:flex;justify-content:space-between;align-items:center;padding:1.2rem 4rem;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(250,250,248,0.92);backdrop-filter:blur(14px);z-index:100;transition:box-shadow 0.3s}
@@ -743,7 +752,17 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
 
 <script>
 // ── Scroll-triggered reveal ──
+// Only animate elements that are BELOW the initial viewport
 const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+const FOLD = window.innerHeight;
+revealEls.forEach(el => {
+  const rect = el.getBoundingClientRect();
+  if (rect.top > FOLD + 40) {
+    // Below fold: hide it, animate it in on scroll
+    el.classList.add('will-animate');
+  }
+  // Above fold: leave visible, no animation needed
+});
 const io = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) {
@@ -751,8 +770,10 @@ const io = new IntersectionObserver((entries) => {
       io.unobserve(e.target);
     }
   });
-}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-revealEls.forEach(el => io.observe(el));
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+revealEls.forEach(el => {
+  if (el.classList.contains('will-animate')) io.observe(el);
+});
 
 // ── Nav shadow on scroll ──
 const nav = document.getElementById('main-nav');
