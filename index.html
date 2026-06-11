@@ -266,6 +266,202 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
 .creative-card-label{font-size:11px;font-weight:600;color:var(--ink3);letter-spacing:0.06em;text-transform:uppercase}
 .creative-card-sub{font-size:10px;color:#aaa;font-style:italic}
 .creative-soon{display:inline-flex;align-items:center;gap:6px;margin-top:2rem;font-size:11px;font-weight:600;color:var(--purple);letter-spacing:0.08em;text-transform:uppercase;border:1.5px solid var(--purple);padding:0.5rem 1.2rem;border-radius:3px}
+
+/* ── RESEARCH TRAIL ── */
+.trail-section{padding:6rem 4rem;border-bottom:1px solid var(--border);background:#09090b;position:relative;overflow:hidden}
+@media(max-width:700px){.trail-section{padding:4rem 1.5rem}}
+
+.trail-section::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 55% at 50% 0%,rgba(79,53,216,0.13) 0%,transparent 70%);
+  pointer-events:none
+}
+
+.trail-header{max-width:680px;margin:0 auto 4.5rem;text-align:center;position:relative;z-index:1}
+.trail-eyebrow{font-size:10px;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:rgba(255,255,255,0.28);margin-bottom:1rem}
+.trail-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;color:#fff;line-height:1.15;letter-spacing:-0.3px;margin-bottom:1rem}
+.trail-title em{font-style:italic;color:#a78bfa}
+.trail-subtitle{font-size:14px;color:rgba(255,255,255,0.38);line-height:1.75;max-width:520px;margin:0 auto}
+
+/* The spine — a vertical line connecting all nodes */
+.trail-spine{position:relative;max-width:820px;margin:0 auto;z-index:1}
+.trail-spine::before{
+  content:'';
+  position:absolute;
+  left:50%;
+  top:0;bottom:0;
+  width:1px;
+  background:linear-gradient(to bottom,transparent,rgba(79,53,216,0.4) 8%,rgba(79,53,216,0.4) 92%,transparent);
+  transform:translateX(-50%);
+}
+@media(max-width:700px){
+  .trail-spine::before{left:22px;transform:none}
+}
+
+/* Each node row: question on one side, answer on the other */
+.trail-node{
+  display:grid;
+  grid-template-columns:1fr 56px 1fr;
+  gap:0;
+  margin-bottom:0;
+  position:relative;
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity 0.7s cubic-bezier(.22,1,.36,1), transform 0.7s cubic-bezier(.22,1,.36,1);
+}
+.trail-node.trail-visible{opacity:1;transform:none}
+@media(max-width:700px){
+  .trail-node{grid-template-columns:44px 1fr;gap:0}
+}
+
+/* The centre column: just the dot */
+.trail-node-centre{
+  display:flex;flex-direction:column;align-items:center;
+  padding-top:2.2rem;
+  position:relative;
+}
+.trail-dot-outer{
+  width:36px;height:36px;border-radius:50%;
+  background:#09090b;
+  border:1.5px solid rgba(79,53,216,0.55);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  transition:border-color 0.3s, box-shadow 0.3s;
+  cursor:default;
+  position:relative;z-index:2;
+}
+.trail-node:hover .trail-dot-outer{
+  border-color:#a78bfa;
+  box-shadow:0 0 0 4px rgba(79,53,216,0.14), 0 0 18px rgba(79,53,216,0.22);
+}
+.trail-dot-inner{
+  width:10px;height:10px;border-radius:50%;
+  background:rgba(79,53,216,0.6);
+  transition:background 0.3s,transform 0.3s;
+}
+.trail-node:hover .trail-dot-inner{background:#a78bfa;transform:scale(1.25)}
+
+/* The connector line below dot */
+.trail-node-line{
+  flex:1;width:1px;
+  background:linear-gradient(to bottom,rgba(79,53,216,0.35),rgba(79,53,216,0.08));
+  min-height:40px;
+}
+
+/* Question card (left, even; right, odd) */
+.trail-q{
+  padding:2rem 2rem 2rem 0;
+  display:flex;flex-direction:column;
+  justify-content:flex-start;
+  text-align:right;
+}
+.trail-a{
+  padding:2rem 0 2rem 2rem;
+  display:flex;flex-direction:column;
+  justify-content:flex-start;
+}
+@media(max-width:700px){
+  .trail-q{display:none}
+  .trail-a{padding:1.5rem 0 1.5rem 1rem;grid-column:2}
+  .trail-node-centre{padding-top:1.6rem}
+}
+
+/* Alternating: odd nodes flip the layout */
+.trail-node:nth-child(odd) .trail-q{order:3;text-align:left;padding:2rem 0 2rem 2rem}
+.trail-node:nth-child(odd) .trail-node-centre{order:2}
+.trail-node:nth-child(odd) .trail-a{order:1;text-align:right;padding:2rem 2rem 2rem 0}
+@media(max-width:700px){
+  .trail-node:nth-child(odd) .trail-q{display:none}
+  .trail-node:nth-child(odd) .trail-a{order:2;text-align:left;padding:1.5rem 0 1.5rem 1rem}
+  .trail-node:nth-child(odd) .trail-node-centre{order:1}
+}
+
+.trail-q-label{
+  font-size:9px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;
+  color:rgba(255,255,255,0.2);margin-bottom:0.5rem
+}
+.trail-q-text{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(0.95rem,1.4vw,1.1rem);
+  font-style:italic;
+  color:rgba(255,255,255,0.5);
+  line-height:1.5;
+}
+
+.trail-a-label{
+  font-size:9px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;
+  color:#a78bfa;margin-bottom:0.5rem;
+}
+.trail-a-project{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1rem,1.5vw,1.15rem);
+  font-weight:700;color:#fff;
+  line-height:1.3;margin-bottom:0.4rem
+}
+.trail-a-desc{
+  font-size:12.5px;
+  color:rgba(255,255,255,0.38);
+  line-height:1.7;margin-bottom:0.7rem
+}
+.trail-a-finding{
+  font-size:11px;font-weight:600;
+  color:rgba(167,139,250,0.85);
+  letter-spacing:0.03em;
+  display:flex;align-items:baseline;gap:5px;
+}
+.trail-a-finding::before{content:'→';font-size:10px;opacity:0.6}
+
+.trail-a-link{
+  display:inline-flex;align-items:center;gap:5px;
+  margin-top:0.65rem;
+  font-size:10px;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(255,255,255,0.25);
+  text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,0.1);
+  padding-bottom:1px;
+  transition:color 0.2s,border-color 0.2s;
+}
+.trail-a-link:hover{color:#a78bfa;border-color:rgba(167,139,250,0.4)}
+
+/* Period badge */
+.trail-period{
+  font-size:9px;font-family:'Inter',sans-serif;font-weight:600;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:rgba(79,53,216,0.7);
+  background:rgba(79,53,216,0.1);
+  border:1px solid rgba(79,53,216,0.22);
+  padding:2px 8px;border-radius:3px;
+  display:inline-block;margin-bottom:0.6rem;
+  align-self:flex-start;
+}
+.trail-node:nth-child(odd) .trail-a .trail-period{align-self:flex-end}
+@media(max-width:700px){
+  .trail-node:nth-child(odd) .trail-a .trail-period{align-self:flex-start}
+}
+
+/* Closing convergence note */
+.trail-convergence{
+  margin:3.5rem auto 0;
+  max-width:580px;
+  text-align:center;
+  padding:2rem 2.5rem;
+  border:1px solid rgba(79,53,216,0.2);
+  background:rgba(79,53,216,0.06);
+  position:relative;z-index:1;
+}
+.trail-convergence-label{
+  font-size:9px;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;
+  color:rgba(167,139,250,0.5);margin-bottom:0.75rem
+}
+.trail-convergence-text{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1rem,1.6vw,1.2rem);
+  font-style:italic;
+  color:rgba(255,255,255,0.62);
+  line-height:1.65
+}
+.trail-convergence-text em{color:#a78bfa;font-style:normal}
 </style>
 </head>
 <body>
@@ -276,11 +472,13 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
     <a href="#about">About</a>
     <a href="#learning-gap" style="color:var(--purple);font-weight:600">The Learning Gap ↗</a>
     <a href="#algobridge">AlgoBridge</a>
+    <a href="#trail">Research Trail</a>
     <a href="#research">Research</a>
     <a href="#projects">Projects</a>
     <a href="#creative">Creative Work</a>
     <a href="#writing">Writing</a>
     <a href="#credentials">Credentials</a>
+    <a href="#evidence">Evidence</a>
   </div>
   <a class="nav-cta" href="https://github.com/ak3036811-gif" target="_blank">GitHub ↗</a>
 </nav>
@@ -288,27 +486,21 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
 <!-- ── HERO ── -->
 <section class="hero" id="about">
   <div>
-    <div class="hero-kicker">AI Researcher · Creative Technologist · Educator</div>
-    <h1>Building AI tools, publishing research, and making things where <em>code and art are inseparable.</em></h1>
+    <div class="hero-kicker">AI &amp; Learning Research · EdTech · Computing &amp; the Arts</div>
+    <h1>Investigating how AI changes the way <em>humans learn</em> — and building systems that make thinking harder, not easier.</h1>
     <p class="hero-sub">
       I'm <strong>Ayush Kumar</strong>, a Grade 11 student from Ghaziabad, India. I design adaptive AI systems, founded <strong>AlgoBridge</strong> — a digital literacy initiative that has reached 200+ students across 5 NGOs — and write research-backed essays on AI and education.
     </p>
-    <div class="hero-community">
-      For over <strong>11 years</strong>, I've been engaged in a community initiative centered on cultural education and dialogue, working with diverse groups to explore Indian traditions and perspectives. Through this, I've developed the ability to communicate complex ideas in simple, accessible ways — a skill that directly informs my work in teaching AI and algorithms to students from non-technical backgrounds.
-    </div>
     <div class="hero-actions">
-      <a class="btn-fill" href="#algobridge">See My Impact Work</a>
+      <a class="btn-fill" href="#learning-gap">The Learning Gap →</a>
       <a class="btn-outline" href="#research">View Research</a>
     </div>
   </div>
   <div class="hero-stats">
-    <div class="hero-stat"><div class="hero-stat-val">200+</div><div class="hero-stat-label">Students reached through AlgoBridge</div></div>
     <div class="hero-stat"><div class="hero-stat-val">4k+</div><div class="hero-stat-label">Active users on AlgoBridge Learn</div></div>
-    <div class="hero-stat"><div class="hero-stat-val">5</div><div class="hero-stat-label">NGOs partnered with</div></div>
+    <div class="hero-stat"><div class="hero-stat-val">200+</div><div class="hero-stat-label">Students taught across 5 NGOs</div></div>
     <div class="hero-stat"><div class="hero-stat-val">2</div><div class="hero-stat-label">Original research papers published</div></div>
-    <div class="hero-stat"><div class="hero-stat-val">11+</div><div class="hero-stat-label">Years in community &amp; cultural programs</div></div>
-    <div class="hero-stat"><div class="hero-stat-val">40k+</div><div class="hero-stat-label">Blog readers across 10+ countries</div></div>
-    <div class="hero-stat"><div class="hero-stat-val">2nd</div><div class="hero-stat-label">Place — GSAP Global Pitching Finale</div></div>
+    <div class="hero-stat"><div class="hero-stat-val">20→80%</div><div class="hero-stat-label">Comprehension gain per workshop</div></div>
   </div>
 </section>
 
@@ -354,20 +546,6 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
   </div>
 </section>
 
-<!-- ── CREATIVE WORK TEASER ── -->
-<section class="creative-teaser" id="creative">
-  <div class="section-eyebrow">Art · Music · Visual Work</div>
-  <div class="section-heading">Creative Work</div>
-  <p style="font-size:15px;color:var(--ink2);line-height:1.8;max-width:600px;font-weight:300">Five years of drawing — anime, scenery, visual composition. Three years of self-taught flute. The same discipline that breaks a difficult passage apart until it resolves is identical to how I debug or redesign a system. Visual thinking shapes every interface I build.</p>
-  <div class="creative-grid">
-    <div class="creative-card"><div class="creative-card-icon">✏️</div><div class="creative-card-label">Drawings</div><div class="creative-card-sub">Anime · Scenery · Portraits</div></div>
-    <div class="creative-card"><div class="creative-card-icon">🎵</div><div class="creative-card-label">Flute</div><div class="creative-card-sub">Self-taught · 3 years</div></div>
-    <div class="creative-card"><div class="creative-card-icon">⚙️</div><div class="creative-card-label">Generative Art</div><div class="creative-card-sub">Code as creative medium</div></div>
-    <div class="creative-card"><div class="creative-card-icon">🎨</div><div class="creative-card-label">Interactive Design</div><div class="creative-card-sub">The Learning Gap &amp; beyond</div></div>
-  </div>
-  <div class="creative-soon">⏳ Full art page &amp; recordings — coming soon</div>
-</section>
-
 <!-- ── ALGOBRIDGE ── -->
 <section class="section" id="algobridge">
   <div class="section-eyebrow reveal">Community Impact</div>
@@ -375,7 +553,7 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
 
   <div class="algo-problem reveal">
     <div class="algo-problem-label">The Problem</div>
-    <p>Millions of students graduate without ever encountering algorithms or AI — the engines powering the modern world. <strong>1 in 3 students lack basic digital literacy.</strong> In underserved schools, the number is far worse. Not because students lack ability — but because they lack access. No trained teachers. No infrastructure. No awareness of why it matters.</p>
+    <p>Millions of students graduate without ever encountering algorithms or AI — the engines powering the modern world. <strong>1 in 3 students lack basic digital literacy</strong> <span style="font-size:12px;color:var(--ink3);font-weight:400">(UNESCO Institute for Statistics, 2022)</span><strong>.</strong> In underserved schools, the number is far worse. Not because students lack ability — but because they lack access. No trained teachers. No infrastructure. No awareness of why it matters.</p>
   </div>
 
   <div class="algo-layout">
@@ -386,10 +564,10 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
         I designed and ran a workshop-based AI literacy program for students aged 11–18, with <strong>zero prior coding knowledge required</strong>. No jargon, no textbooks — just real-world examples, interactive decisions, and the belief that understanding AI should not be a privilege. Inspired by witnessing how DOT Glasses transformed lives with simple clear vision, I saw the parallel: <strong>one workshop on algorithms could spark a future engineer.</strong> The most common question after every session was <em>"Where do I keep learning?"</em> — so I built <strong><a href="https://ak3036811-gif.github.io/algobridge-learn/" target="_blank" style="color:var(--purple);text-decoration:underline;text-underline-offset:3px">AlgoBridge Learn</a></strong>: a free platform with structured lessons, practice problems, and an AI tutor that sends students back to their own thinking rather than away from it.
       </p>
       <div class="outcome-list">
-        <div class="outcome-item"><div class="outcome-dot"></div><div class="outcome-text">Students actively explained algorithms using real-world analogies — unprompted</div></div>
-        <div class="outcome-item"><div class="outcome-dot"></div><div class="outcome-text">High engagement sustained across all 4 sessions vs near-zero in traditional lectures</div></div>
-        <div class="outcome-item"><div class="outcome-dot"></div><div class="outcome-text">Beginners grasped concepts like bias, ranking, and decision-making within one session</div></div>
-        <div class="outcome-item"><div class="outcome-dot"></div><div class="outcome-text">Students asked deep questions about AI that went beyond the curriculum</div></div>
+        <div class="outcome-item"><div class="outcome-dot"></div><div class="outcome-text">A 12-year-old explained algorithmic bias using the example of her school's attendance app — unprompted, in her own words, in session one.</div></div>
+        <div class="outcome-item"><div class="outcome-dot"></div><div class="outcome-text">Students who'd never written a line of code were predicting search ranking outcomes by the end of session two. The vocabulary was never the barrier.</div></div>
+        <div class="outcome-item"><div class="outcome-dot"></div><div class="outcome-text">One student asked: "If the algorithm doesn't know I'm poor, why does it still show me fewer opportunities?" That question wasn't in the curriculum.</div></div>
+        <div class="outcome-item"><div class="outcome-dot"></div><div class="outcome-text">20% could explain what an algorithm was before the workshop. 80% could after — using real examples they chose themselves.</div></div>
       </div>
     </div>
     <div class="impact-box reveal-right">
@@ -429,8 +607,8 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
   </div>
 
   <div class="pullquote reveal">
-    <p>"If a student walks away thinking 'I get it' — that is the whole point."</p>
-    <cite>— Ayush Kumar, Founder · AlgoBridge · Grade 11, MNB Modern Senior Secondary School</cite>
+    <p>"I never thought I'd understand this. I always thought algorithms were just for people who were already good at maths."</p>
+    <cite>— Student, Session 3 · Ghaziabad NGO workshop · Age 14, no prior CS background</cite>
   </div>
 </section>
 
@@ -489,6 +667,10 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
       <div class="tag-row">
         <span class="tag">JEE Preparation</span><span class="tag">Cognitive Science</span><span class="tag">Hybrid Learning</span><span class="tag">Active Recall</span><span class="tag">AI in Education</span><span class="tag">False Mastery</span>
       </div>
+      <div style="margin-top:1.5rem;padding:1.25rem;background:var(--purple-soft);border-left:3px solid var(--purple);border-radius:0 4px 4px 0">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--purple);margin-bottom:0.5rem">Why It Matters</div>
+        <p style="font-size:13px;color:var(--ink2);line-height:1.75;font-weight:300">If passive AI use produces the highest confidence and the worst outcomes, the design of AI tools — not their existence — is what determines whether they help or harm. Every AI tutor, every homework assistant, every adaptive platform carries this choice in its architecture.</p>
+      </div>
       <div style="margin-top:1.25rem">
         <a href="https://www.academia.edu/168392291/_AI_Assisted_vs_Traditional_Learning_A_Comparative_Study_of_Understanding_Retention_and_Exam_Performance_Among_JEE_Aspirants_" target="_blank" class="project-link" style="font-size:12px">View on Academia →</a>
       </div>
@@ -532,6 +714,10 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
       <div class="tag-row">
         <span class="tag">Game AI</span><span class="tag">Dynamic Difficulty Adjustment</span><span class="tag">Flow Theory</span><span class="tag">Player Engagement</span><span class="tag">Reinforcement Learning</span><span class="tag">Educational Technology</span>
       </div>
+      <div style="margin-top:1.5rem;padding:1.25rem;background:var(--purple-soft);border-left:3px solid var(--purple);border-radius:0 4px 4px 0">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--purple);margin-bottom:0.5rem">Why It Matters</div>
+        <p style="font-size:13px;color:var(--ink2);line-height:1.75;font-weight:300">If real-time challenge calibration can extend engagement by 69% using only three parameters and no neural network, educational systems may not need complex infrastructure to meaningfully improve persistence — they need better feedback loops. The same principle that kept players in the game applies to students in a classroom.</p>
+      </div>
       <div style="margin-top:1.25rem">
         <a href="https://www.academia.edu/168392629/Dynamic_Difficulty_Adjustment_via_Reinforcement_Inspired_Adaptation_An_Empirical_Study_of_Player_Engagement_in_a_2D_Platformer_Environment" target="_blank" class="project-link" style="font-size:12px">View on Academia →</a>
       </div>
@@ -546,11 +732,150 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
   </div>
 </section>
 
+<!-- ── THE RESEARCH TRAIL ── -->
+<section class="trail-section" id="trail">
+  <div class="trail-header reveal">
+    <div class="trail-eyebrow">How the three pieces connect</div>
+    <div class="trail-title">Every project answered a question<br>the <em>previous one couldn't.</em></div>
+    <p class="trail-subtitle">This is not a list of activities. It is a single compounding investigation — each piece built because the last one left something unanswered.</p>
+  </div>
+
+  <div class="trail-spine">
+
+    <!-- NODE 1 -->
+    <div class="trail-node">
+      <div class="trail-q">
+        <div class="trail-q-label">The question that started it</div>
+        <div class="trail-q-text">"Why do students with curiosity and ability still close the tab — even when the explanation is right in front of them?"</div>
+      </div>
+      <div class="trail-node-centre">
+        <div class="trail-dot-outer"><div class="trail-dot-inner"></div></div>
+        <div class="trail-node-line"></div>
+      </div>
+      <div class="trail-a">
+        <div class="trail-period">Gr. 8–12 · Ongoing</div>
+        <div class="trail-a-label">Built to answer it</div>
+        <div class="trail-a-project">Student Design Community</div>
+        <div class="trail-a-desc">40–50 members, five years of playtests. Students who designed for each other learned faster than students who consumed content alone.</div>
+        <div class="trail-a-finding">Peer-designed systems outlast expert-designed ones — the student who built it already solved the vocabulary problem</div>
+      </div>
+    </div>
+
+    <!-- NODE 2 -->
+    <div class="trail-node">
+      <div class="trail-q">
+        <div class="trail-q-label">What that raised</div>
+        <div class="trail-q-text">"If calibration is the variable — can I build a system that adjusts to the learner in real time?"</div>
+      </div>
+      <div class="trail-node-centre">
+        <div class="trail-dot-outer"><div class="trail-dot-inner"></div></div>
+        <div class="trail-node-line"></div>
+      </div>
+      <div class="trail-a">
+        <div class="trail-period">Gr. 11–12</div>
+        <div class="trail-a-label">Built to answer it</div>
+        <div class="trail-a-project">Game Research — Adaptive AI Difficulty</div>
+        <div class="trail-a-desc">Built a 2D platformer as a research instrument. A tabular Q-learning policy adjusted difficulty in real time. Then ran a controlled experiment.</div>
+        <div class="trail-a-finding">+69% session duration, −49% retries. Cohen's d = 2.31. Zero early terminations vs. four under static difficulty.</div>
+        <a class="trail-a-link" href="https://www.academia.edu/168392629/" target="_blank">Published study ↗</a>
+      </div>
+    </div>
+
+    <!-- NODE 3 -->
+    <div class="trail-node">
+      <div class="trail-q">
+        <div class="trail-q-label">What that raised</div>
+        <div class="trail-q-text">"The game findings work for engagement — but does adaptive AI actually improve learning outcomes, or just dwell time? And what happens when students use AI to bypass the struggle entirely?"</div>
+      </div>
+      <div class="trail-node-centre">
+        <div class="trail-dot-outer"><div class="trail-dot-inner"></div></div>
+        <div class="trail-node-line"></div>
+      </div>
+      <div class="trail-a">
+        <div class="trail-period">Gr. 11–12</div>
+        <div class="trail-a-label">Built to answer it</div>
+        <div class="trail-a-project">Independent Research — AI vs. Traditional Learning</div>
+        <div class="trail-a-desc">39 top-5% JEE students, three controlled groups, two months. The most uncomfortable finding was not the one I expected.</div>
+        <div class="trail-a-finding">Passive AI users: highest confidence during study. Worst outcomes at assessment. The hybrid group started lowest, finished highest — +23 pts vs. +10.</div>
+        <a class="trail-a-link" href="https://www.academia.edu/168392291/" target="_blank">Published study ↗</a>
+      </div>
+    </div>
+
+    <!-- NODE 4 -->
+    <div class="trail-node">
+      <div class="trail-q">
+        <div class="trail-q-label">What that raised</div>
+        <div class="trail-q-text">"So the tool is fine. The method of engagement is the variable. Can I build a platform where the design itself enforces the right method — structurally, not through willpower?"</div>
+      </div>
+      <div class="trail-node-centre">
+        <div class="trail-dot-outer"><div class="trail-dot-inner"></div></div>
+        <div class="trail-node-line"></div>
+      </div>
+      <div class="trail-a">
+        <div class="trail-period">Gr. 11–12 · Live</div>
+        <div class="trail-a-label">Built to answer it</div>
+        <div class="trail-a-project">AlgoBridge Learn</div>
+        <div class="trail-a-desc">Free platform. Every feature is a design constraint derived from a cognitive science paper. Struggle timer: hints locked until attempt made. Socratic AI: never the answer, always the next question.</div>
+        <div class="trail-a-finding">4,000+ users. The platform enforces what the research found — because the student who skips the struggle doesn't know they're skipping it.</div>
+        <a class="trail-a-link" href="https://ak3036811-gif.github.io/algobridge-learn/" target="_blank">Live platform ↗</a>
+      </div>
+    </div>
+
+    <!-- NODE 5 -->
+    <div class="trail-node">
+      <div class="trail-q">
+        <div class="trail-q-label">What that raised</div>
+        <div class="trail-q-text">"The platform reaches students who already found it. But the students who most need it never encounter it at all — they don't have the prior vocabulary to look for it."</div>
+      </div>
+      <div class="trail-node-centre">
+        <div class="trail-dot-outer"><div class="trail-dot-inner"></div></div>
+        <div class="trail-node-line"></div>
+      </div>
+      <div class="trail-a">
+        <div class="trail-period">Gr. 11–12</div>
+        <div class="trail-a-label">Built to answer it</div>
+        <div class="trail-a-project">AlgoBridge — AI Literacy Nonprofit</div>
+        <div class="trail-a-desc">Took the curriculum into five NGOs. 200+ students, ages 11–18, zero CS background. One measure: could they explain an algorithm in their own words by the end?</div>
+        <div class="trail-a-finding">20% → 80% comprehension across sessions. The bottleneck was never the student. It was always the calibration of the explanation.</div>
+      </div>
+    </div>
+
+    <!-- NODE 6 -->
+    <div class="trail-node">
+      <div class="trail-q">
+        <div class="trail-q-label">What that raised</div>
+        <div class="trail-q-text">"The gap I'm seeing isn't individual — it's structural. If AI literacy compounds inequality the same way vision access does, the argument needs to be made at scale. Not as a report. As something you feel."</div>
+      </div>
+      <div class="trail-node-centre">
+        <div class="trail-dot-outer"><div class="trail-dot-inner"></div></div>
+        <div class="trail-node-line"></div>
+      </div>
+      <div class="trail-a">
+        <div class="trail-period">Gr. 12 · Live</div>
+        <div class="trail-a-label">Built to answer it</div>
+        <div class="trail-a-project">The Learning Gap — Interactive Visual Essay</div>
+        <div class="trail-a-desc">Not a website with visuals attached. Argument and medium designed together from scratch. The form is the thesis.</div>
+        <div class="trail-a-finding">Computation and creative intent, genuinely inseparable. Not layered. Not adjacent. The same thing.</div>
+        <a class="trail-a-link" href="https://ak3036811-gif.github.io/The-learning-gap/" target="_blank">Experience it ↗</a>
+      </div>
+    </div>
+
+  </div><!-- /trail-spine -->
+
+  <div class="trail-convergence reveal">
+    <div class="trail-convergence-label">What the trail is</div>
+    <div class="trail-convergence-text">
+      Six projects. One question, asked six different ways: <em>what does it actually take for a student to cross the threshold?</em> The answer kept requiring more work. I kept doing it.
+    </div>
+  </div>
+
+</section>
+
 <!-- ── PROJECTS ── -->
-<section class="section" id="projects">
-  <div class="section-eyebrow reveal">Core Work</div>
-  <div class="section-heading reveal delay-1">AI + Education Projects</div>
-  <div class="g2" style="margin-bottom:3rem">
+<section class="section" id="projects" style="padding-top:3rem;padding-bottom:3rem">
+  <div class="section-eyebrow reveal">Supporting Work</div>
+  <div style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--ink);margin-bottom:1.5rem" class="reveal delay-1">Other Projects</div>
+  <div class="g2" style="margin-bottom:1.5rem">
     <div class="project-card reveal-left">
       <div class="project-type">Education Initiative · Ongoing</div>
       <div class="project-name">AlgoBridge Learn</div>
@@ -565,8 +890,6 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
     </div>
   </div>
 
-  <div class="section-eyebrow reveal" style="margin-bottom:0.6rem">Technical Projects</div>
-  <div style="font-size:13px;color:var(--ink3);margin-bottom:1.5rem" class="reveal delay-1">Open-source work on GitHub — games, learning experiments, and CS coursework.</div>
   <div class="g2">
     <div class="project-card reveal-left">
       <div class="project-type">Game Development · CS50AI</div>
@@ -625,6 +948,13 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
   <a class="view-all-link reveal" href="https://itsreadingtimee.blogspot.com" target="_blank">View all writing →</a>
 </section>
 
+
+<!-- ── CREATIVE — slim teaser ── -->
+<div style="padding:2.5rem 4rem;border-bottom:1px solid var(--border);background:var(--surface);display:flex;align-items:center;gap:3rem;flex-wrap:wrap">
+  <div style="font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--purple)">Also</div>
+  <div style="font-size:14px;color:var(--ink2);font-weight:300">Five years of drawing. Three years of self-taught flute. The discipline of breaking a difficult passage until it resolves is the same discipline I bring to debugging a system. <span style="color:var(--ink3);font-size:13px">— Art &amp; recordings coming soon.</span></div>
+</div>
+
 <!-- ── CREDENTIALS ── -->
 <section class="section" id="credentials">
   <div class="section-eyebrow reveal">Education</div>
@@ -673,6 +1003,103 @@ footer{padding:2.5rem 4rem;display:flex;justify-content:space-between;align-item
       <div class="cert-meta-big">Competed against international participants</div>
       <div class="cert-award-big">🥈 2nd Place</div>
     </div>
+  </div>
+</section>
+
+
+
+<!-- ── EVIDENCE ── -->
+<style>
+.ev-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:2.5rem}
+@media(max-width:900px){.ev-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.ev-grid{grid-template-columns:repeat(2,1fr)}}
+.ev-card{position:relative;border-radius:10px;overflow:hidden;padding:1.6rem 1.4rem 1.4rem;display:flex;flex-direction:column;gap:0;text-decoration:none;transition:transform 0.25s cubic-bezier(.22,1,.36,1),box-shadow 0.25s cubic-bezier(.22,1,.36,1);cursor:pointer}
+.ev-card::before{content:'';position:absolute;inset:0;border-radius:10px;padding:1px;background:linear-gradient(135deg,rgba(255,255,255,0.12),rgba(255,255,255,0.03));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.ev-card:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 16px 40px rgba(0,0,0,0.45),0 0 0 1px rgba(255,255,255,0.1)}
+.ev-card-glow{position:absolute;inset:0;border-radius:10px;opacity:0;transition:opacity 0.3s;pointer-events:none}
+.ev-card:hover .ev-card-glow{opacity:1}
+.ev-icon{font-size:1.5rem;line-height:1;margin-bottom:1rem;display:block}
+.ev-stat{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#fff;line-height:1;margin-bottom:0.2rem}
+.ev-title{font-size:11px;font-weight:700;letter-spacing:0.06em;color:rgba(255,255,255,0.9);margin-bottom:0.3rem;text-transform:uppercase}
+.ev-sub{font-size:10px;color:rgba(255,255,255,0.4);line-height:1.5}
+.ev-arrow{position:absolute;top:1rem;right:1rem;font-size:11px;color:rgba(255,255,255,0.25);transition:color 0.2s,transform 0.2s}
+.ev-card:hover .ev-arrow{color:rgba(255,255,255,0.7);transform:translate(2px,-2px)}
+
+/* Card colour themes */
+.ev-c1{background:linear-gradient(135deg,#1e1040 0%,#2d1b6e 100%)}
+.ev-c1 .ev-card-glow{background:radial-gradient(circle at 70% 30%,rgba(100,70,255,0.35),transparent 65%)}
+.ev-c2{background:linear-gradient(135deg,#0f2027 0%,#1a3a4a 100%)}
+.ev-c2 .ev-card-glow{background:radial-gradient(circle at 70% 30%,rgba(0,180,180,0.25),transparent 65%)}
+.ev-c3{background:linear-gradient(135deg,#0d2818 0%,#1a4a2e 100%)}
+.ev-c3 .ev-card-glow{background:radial-gradient(circle at 70% 30%,rgba(30,200,100,0.25),transparent 65%)}
+.ev-c4{background:linear-gradient(135deg,#2a1a0e 0%,#4a2e10 100%)}
+.ev-c4 .ev-card-glow{background:radial-gradient(circle at 70% 30%,rgba(255,140,30,0.25),transparent 65%)}
+.ev-c5{background:linear-gradient(135deg,#1a0e2a 0%,#2e1a4a 100%)}
+.ev-c5 .ev-card-glow{background:radial-gradient(circle at 70% 30%,rgba(180,80,255,0.25),transparent 65%)}
+</style>
+
+<section id="evidence" style="padding:5rem 4rem;border-bottom:1px solid var(--border);background:#09090b">
+  <div style="font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.28);margin-bottom:0.6rem" class="reveal">Verify Everything</div>
+  <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:#fff;letter-spacing:-0.3px;margin-bottom:0.5rem" class="reveal delay-1">Evidence</div>
+  <p style="font-size:14px;color:rgba(255,255,255,0.35);font-weight:300;max-width:460px;line-height:1.7" class="reveal delay-2">Every claim on this site is verifiable. One place, one click.</p>
+
+  <div class="ev-grid reveal delay-3">
+
+    <a href="https://www.academia.edu/168392291/" target="_blank" class="ev-card ev-c1">
+      <div class="ev-card-glow"></div>
+      <span class="ev-icon">📄</span>
+      <div class="ev-stat">Paper 1</div>
+      <div class="ev-title">AI vs. Traditional Learning</div>
+      <div class="ev-sub">39 students · 2 months · Academia.edu</div>
+      <span class="ev-arrow">↗</span>
+    </a>
+
+    <a href="https://www.academia.edu/168392629/" target="_blank" class="ev-card ev-c2">
+      <div class="ev-card-glow"></div>
+      <span class="ev-icon">🎮</span>
+      <div class="ev-stat">Paper 2</div>
+      <div class="ev-title">Adaptive Difficulty Study</div>
+      <div class="ev-sub">d = 2.31 · +69% engagement · Academia.edu</div>
+      <span class="ev-arrow">↗</span>
+    </a>
+
+    <a href="https://ak3036811-gif.github.io/algobridge-learn/" target="_blank" class="ev-card ev-c3">
+      <div class="ev-card-glow"></div>
+      <span class="ev-icon">🧠</span>
+      <div class="ev-stat">4k+</div>
+      <div class="ev-title">AlgoBridge Learn</div>
+      <div class="ev-sub">Live platform · Active users</div>
+      <span class="ev-arrow">↗</span>
+    </a>
+
+    <a href="https://ak3036811-gif.github.io/The-learning-gap/" target="_blank" class="ev-card ev-c4">
+      <div class="ev-card-glow"></div>
+      <span class="ev-icon">🎨</span>
+      <div class="ev-stat">Live</div>
+      <div class="ev-title">The Learning Gap</div>
+      <div class="ev-sub">Interactive essay · Self-coded</div>
+      <span class="ev-arrow">↗</span>
+    </a>
+
+    <a href="https://github.com/ak3036811-gif" target="_blank" class="ev-card ev-c5">
+      <div class="ev-card-glow"></div>
+      <span class="ev-icon">⌨️</span>
+      <div class="ev-stat">GitHub</div>
+      <div class="ev-title">All Repositories</div>
+      <div class="ev-sub">Open source · CS50AI + more</div>
+      <span class="ev-arrow">↗</span>
+    </a>
+
+  </div>
+</section>
+
+<!-- ── CLOSING QUESTION ── -->
+<section style="padding:5rem 4rem;background:var(--ink);border-top:1px solid #000" id="next">
+  <div style="max-width:680px;margin:0 auto;text-align:center">
+    <div style="font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.28);margin-bottom:1.5rem" class="reveal">The question I'm trying to answer next</div>
+    <div style="font-family:'Playfair Display',serif;font-size:clamp(1.4rem,3vw,2.2rem);font-weight:700;color:#fff;line-height:1.3;letter-spacing:-0.3px;margin-bottom:2rem;font-style:italic" class="reveal delay-1">"Can AI help students think more deeply without removing the productive struggle that learning requires?"</div>
+    <p style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.8;font-weight:300;max-width:520px;margin:0 auto 2.5rem" class="reveal delay-2">That question connects every piece of this work — the research on false mastery, the platform designed around struggle, the essay that argues literacy is a threshold, not a spectrum. I don't have a complete answer yet. That's the point.</p>
+
   </div>
 </section>
 
@@ -897,6 +1324,22 @@ const chartObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.4 });
 document.querySelectorAll('.score-chart').forEach(c => chartObserver.observe(c));
+
+// ── Research Trail: staggered node reveals ──
+(function(){
+  const nodes = document.querySelectorAll('.trail-node');
+  if(!nodes.length) return;
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.style.transitionDelay = '0s';
+        e.target.classList.add('trail-visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  nodes.forEach(n => obs.observe(n));
+})();
 </script>
 </body>
 </html>
